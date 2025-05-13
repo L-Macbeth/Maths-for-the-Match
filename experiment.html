@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Experiment</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script> <!-- Link to JavaScript for interactivity -->
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="usefullinks.html">Useful Links</a>
+      <a href="experiment.html">Experiment</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Experiment</h1>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+      <h2>Introduction</h2>
+      <p>This section introduces the experiment and provides context.</p>
+      <img src="intro-image.jpg" alt="Introduction Image" />
+      <h3>Experiment Outline</h3>
+      <iframe src="https://www.youtube.com/embed/example-video" title="Experiment Outline Video" allowfullscreen></iframe>
+      <button onclick="toggleDropdown('script-intro')">Show Script</button>
+      <div id="script-intro" class="dropdown-content" style="display: none;">
+        <p>This is the script for the introduction video.</p>
+      </div>
+      <p>Follow the steps below to conduct the experiment.</p>
+    </section>
+
+    <!-- Experiment Section -->
+    <section id="experiment">
+      <h2>Experiment</h2>
+      <!-- Data Table -->
+        <h3>Data Table</h3>
+        <table id="data-table">
+        <thead>
+            <tr>
+            <th>Pressure (psi)</th>
+            <th>Number of Bounces</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+            <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+            </tr>
+            <tr>
+            <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+            <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+        </table>
+        <button onclick="updateGraph()">Update Graph</button>
+
+        <!-- Graph -->
+        <h3>Graph</h3>
+        <canvas id="graphCanvas" width="600" height="400"></canvas>
+    </section>
+
+    <!-- Theory Outline Section -->
+    <section id="theory-outline">
+      <h2>Theory Outline</h2>
+      <iframe src="https://www.youtube.com/embed/example-theory-video" title="Theory Outline Video" allowfullscreen></iframe>
+      <button onclick="toggleDropdown('script-theory')">Show Script</button>
+      <div id="script-theory" class="dropdown-content" style="display: none;">
+        <p>This is the script for the theory video.</p>
+      </div>
+      <p>Here is a description of the theory with diagrams and animations:</p>
+      <img src="theory-diagram.jpg" alt="Theory Diagram" />
+    </section>
+
+    <!-- Conclusions Questions Section -->
+    <section id="conclusions-questions">
+      <h2>Conclusions Questions</h2>
+      <div>
+        <p>How does the pressure affect the number of bounces?</p>
+        <button onclick="toggleDropdown('answer1')">Show Answer</button>
+        <div id="answer1" class="dropdown-content" style="display: none;">
+          <p>The pressure increases the number of bounces because...</p>
+        </div>
+      </div>
+      <div>
+        <p>Why is this true? Graph that we have developed with more data.</p>
+        <button onclick="toggleDropdown('answer2')">Show Answer</button>
+        <div id="answer2" class="dropdown-content" style="display: none;">
+          <p>Explanation with reference to the graph.</p>
+        </div>
+      </div>
+      <div>
+        <p>What if you threw the ball?</p>
+        <button onclick="toggleDropdown('answer3')">Show Answer</button>
+        <div id="answer3" class="dropdown-content" style="display: none;">
+          <p>Explanation of the effect of throwing the ball.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusions Section -->
+    <section id="conclusions">
+      <h2>Conclusions</h2>
+      <iframe src="https://www.youtube.com/embed/example-conclusion-video" title="Conclusions Video" allowfullscreen></iframe>
+      <button onclick="toggleDropdown('script-conclusion')">Show Script</button>
+      <div id="script-conclusion" class="dropdown-content" style="display: none;">
+        <p>This is the script for the conclusions video.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Robins Foundation Outreach</p>
+  </footer>
+
+  <script>
+    // JavaScript function to toggle dropdown visibility
+    function toggleDropdown(id) {
+      const element = document.getElementById(id);
+      element.style.display = element.style.display === 'none' ? 'block' : 'none';
+    }
+
+        // Initialize the Chart.js graph
+        const ctx = document.getElementById('graphCanvas').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line', // Line graph
+      data: {
+        labels: [], // X-axis labels (Pressure)
+        datasets: [{
+          label: 'Number of Bounces',
+          data: [], // Y-axis data (Bounces)
+          borderColor: 'blue',
+          borderWidth: 2,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Pressure (psi)'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Bounces'
+            }
+          }
+        }
+      }
+    });
+
+    // Function to update the graph based on table input
+    function updateGraph() {
+        const pressureInputs = document.querySelectorAll('.pressure-input');
+        const bouncesInputs = document.querySelectorAll('.bounces-input');
+
+        const pressures = [];
+        const bounces = [];
+
+        // Collect data from the table
+        pressureInputs.forEach((input, index) => {
+            const pressure = parseFloat(input.value);
+            const bounce = parseFloat(bouncesInputs[index].value);
+
+            if (!isNaN(pressure) && !isNaN(bounce)) {
+            pressures.push(pressure);
+            bounces.push(bounce);
+            }
+        });
+
+        // Validate inputs after collecting data
+        if (pressures.length === 0 || bounces.length === 0) {
+            alert('Please enter valid data in the table.');
+            return;
+        }
+
+        // Update the chart data
+        chart.data.labels = pressures;
+        chart.data.datasets[0].data = bounces;
+        chart.update(); // Refresh the chart
+    }
+  </script>
+</body>
+</html>
