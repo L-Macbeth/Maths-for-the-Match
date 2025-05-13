@@ -100,8 +100,8 @@ button:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 5px;
-  width: 400px;              /* About 50% of a typical 800px-wide screen */
-  aspect-ratio: 16 / 9;      /* Maintains 16:9 ratio */
+  width: 800px;              /* About 50% of a typical 800px-wide screen */
+  aspect-ratio: 16 / 4;      /* Maintains 16:9 ratio */
   display: inline-block;     /* Allows grid layout */
   vertical-align: top;
   background: #fff;
