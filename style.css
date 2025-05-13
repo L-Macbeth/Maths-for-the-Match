@@ -70,7 +70,7 @@ canvas {
   
   /* Button styling */
 button {
-    display: inline-block;
+    display: block;
     margin: 20px auto;
     padding: 10px 20px;
     font-size: 16px;
@@ -86,43 +86,43 @@ button:hover {
 }
 
 /* Style for the link preview container */
+/* Overlay covers the whole preview */
 .link-preview {
-    position: relative;
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    border-radius: 5px;
+  position: relative;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.go-to-link-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(51, 51, 51, 0.8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+  z-index: 2;
+}
+
+/* Sweeping effect on hover */
+.link-preview:hover .go-to-link-overlay {
+  opacity: 1;
+  pointer-events: auto;
+  animation: sweep-right 0.7s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes sweep-right {
+  0% {
+    clip-path: inset(0 100% 0 0);
   }
-  
-  /* Style for the iframe */
-  .link-preview iframe {
-    width: 100%;
-    height: 200px;
-    border: none;
+  100% {
+    clip-path: inset(0 0 0 0);
   }
-  
-  /* Style for the "Go to this page" button */
-  .link-preview .go-to-link {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    padding: 8px 12px;
-    background-color: #333;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    border-radius: 5px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Show the button on hover */
-  .link-preview:hover .go-to-link {
-    opacity: 1;
-  }
-  
-  /* Button hover effect */
-  .link-preview .go-to-link:hover {
-    background-color: #555;
-  }
+}

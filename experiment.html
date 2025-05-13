@@ -49,10 +49,12 @@
                 <tr>
                 <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
                 <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
                 </tr>
                 <tr>
                 <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
                 <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
                 </tr>
                 <!-- Add more rows as needed -->
             </tbody>
@@ -125,18 +127,20 @@
     }
     // Function to add a new row to the data table
     function addRow() {
-        const tableBody = document.querySelector('#data-table tbody'); // Select the table body
-        const newRow = document.createElement('tr'); // Create a new row
-
-        // Create the cells for the new row
-        newRow.innerHTML = `
-            <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
-            <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-        `;
-
-        tableBody.appendChild(newRow); // Append the new row to the table body
-    }
-
+      const tableBody = document.querySelector('#data-table tbody');
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+          <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+          <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+          <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
+      `;
+      tableBody.appendChild(newRow);
+  }
+    // Function to delete a row from the data table
+    function deleteRow(btn) {
+      const row = btn.closest('tr');
+      row.remove();
+  }
     // Initialize the Chart.js graph
     const ctx = document.getElementById('graphCanvas').getContext('2d');
     const chart = new Chart(ctx, {
