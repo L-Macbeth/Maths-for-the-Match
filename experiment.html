@@ -5,6 +5,7 @@
   <title>Experiment</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script> <!-- Link to JavaScript for interactivity -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
@@ -38,23 +39,23 @@
       <!-- Data Table -->
         <h3>Data Table</h3>
         <table id="data-table">
-        <thead>
-            <tr>
-            <th>Pressure (psi)</th>
-            <th>Number of Bounces</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
-            <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-            </tr>
-            <tr>
-            <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
-            <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
+            <thead>
+                <tr>
+                    <th>Pressure (psi)</th>
+                    <th>Number of Bounces</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+                <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                </tr>
+                <tr>
+                <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+                <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
         </table>
         <button onclick="updateGraph()">Update Graph</button>
 
@@ -121,9 +122,9 @@
       const element = document.getElementById(id);
       element.style.display = element.style.display === 'none' ? 'block' : 'none';
     }
-
-        // Initialize the Chart.js graph
-        const ctx = document.getElementById('graphCanvas').getContext('2d');
+  
+    // Initialize the Chart.js graph
+    const ctx = document.getElementById('graphCanvas').getContext('2d');
     const chart = new Chart(ctx, {
       type: 'line', // Line graph
       data: {
@@ -143,47 +144,58 @@
             title: {
               display: true,
               text: 'Pressure (psi)'
+            },
+            ticks: {
+              beginAtZero: true // Ensure the X-axis starts at zero
             }
           },
           y: {
             title: {
               display: true,
               text: 'Number of Bounces'
+            },
+            ticks: {
+              beginAtZero: true // Ensure the Y-axis starts at zero
             }
           }
         }
       }
     });
-
+  
     // Function to update the graph based on table input
     function updateGraph() {
-        const pressureInputs = document.querySelectorAll('.pressure-input');
-        const bouncesInputs = document.querySelectorAll('.bounces-input');
-
-        const pressures = [];
-        const bounces = [];
-
-        // Collect data from the table
-        pressureInputs.forEach((input, index) => {
-            const pressure = parseFloat(input.value);
-            const bounce = parseFloat(bouncesInputs[index].value);
-
-            if (!isNaN(pressure) && !isNaN(bounce)) {
-            pressures.push(pressure);
-            bounces.push(bounce);
-            }
-        });
-
-        // Validate inputs after collecting data
-        if (pressures.length === 0 || bounces.length === 0) {
-            alert('Please enter valid data in the table.');
-            return;
+      console.log('updateGraph called'); // Debugging
+  
+      const pressureInputs = document.querySelectorAll('.pressure-input');
+      const bouncesInputs = document.querySelectorAll('.bounces-input');
+  
+      const pressures = [];
+      const bounces = [];
+  
+      // Collect data from the table
+      pressureInputs.forEach((input, index) => {
+        const pressure = parseFloat(input.value);
+        const bounce = parseFloat(bouncesInputs[index].value);
+  
+        if (!isNaN(pressure) && !isNaN(bounce)) {
+          pressures.push(pressure);
+          bounces.push(bounce);
         }
-
-        // Update the chart data
-        chart.data.labels = pressures;
-        chart.data.datasets[0].data = bounces;
-        chart.update(); // Refresh the chart
+      });
+  
+      console.log('Pressures:', pressures); // Debugging
+      console.log('Bounces:', bounces); // Debugging
+  
+      // Validate inputs after collecting data
+      if (pressures.length === 0 || bounces.length === 0) {
+        alert('Please enter valid data in the table.');
+        return;
+      }
+  
+      // Update the chart data
+      chart.data.labels = pressures;
+      chart.data.datasets[0].data = bounces;
+      chart.update(); // Refresh the chart
     }
   </script>
 </body>
