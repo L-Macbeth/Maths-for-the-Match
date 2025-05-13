@@ -86,14 +86,33 @@ button:hover {
 }
 
 /* Style for the link preview container */
-/* Overlay covers the whole preview */
+.link-preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+}
+
 .link-preview {
   position: relative;
-  margin-top: 10px;
+  margin: 20px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 5px;
+  width: 400px;              /* About 50% of a typical 800px-wide screen */
+  aspect-ratio: 16 / 9;      /* Maintains 16:9 ratio */
+  display: inline-block;     /* Allows grid layout */
+  vertical-align: top;
+  background: #fff;
+}
+
+/* Make iframe fill the preview area */
+.link-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 .go-to-link-overlay {
