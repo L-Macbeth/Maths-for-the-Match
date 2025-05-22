@@ -28,7 +28,18 @@
       <iframe src="https://www.youtube.com/embed/example-video" title="Experiment Outline Video" allowfullscreen></iframe>
       <button onclick="toggleDropdown('script-intro')">Show Script</button>
       <div id="script-intro" class="dropdown-content" style="display: none;">
-        <p>This is the script for the introduction video.</p>
+        <p>Hi Team, great to see you here. We have a problem, and I need your help investigating the solution. 
+          The league is introducing a new type of football, and our players have been reporting that the inflation of their football is changing the way that they play. We need to work out what inflation does to the ball, and to help our players find a good amount of inflation for the big game. 
+
+        In the home changing rooms you should find some balls that have been inflated, can you test which of them have the best bounce? 
+        We also want to know if we can help our players out by playing on the astroturf or on a harder surface, can you investigate if this makes a difference?
+
+        The drill for this experiment is, hold the ball out at chest level, drop it and count the number of bounces. 
+        We’re looking for clean data, so throwing it at the ground is going to make it hard to see if we’re measuring the strength of your arms or the bounciness of the ball.
+        We’re going for 5 reps of this drill on each of the inflated balls. Hold the ball out at chest level, drop it and count the number of bounces.
+
+        The drill is going to require some teamwork. Someone to drop the ball, some team members to count the number of bounces and someone to write down the score. 
+        Your class is going to work together with some of you bouncing the ball onto the changing room floor and some bouncing it on the astroturf.</p>
       </div>
       <p>Follow the steps below to conduct the experiment.</p>
     </section>
@@ -41,20 +52,32 @@
         <table id="data-table">
             <thead>
                 <tr>
-                    <th>Pressure (psi)</th>
+                    <th>Football Inflation</th>
                     <th>Number of Bounces</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+                  <td>
+                    <select class="pressure-input">
+                      <option value="A">A: Soft</option>
+                      <option value="B">B: Medium</option>
+                      <option value="C">C: Hard</option>
+                    </select>
+                  </td>
                 <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button><td>
                 </tr>
                 <tr>
-                <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
+                  <td>
+                    <select class="pressure-input">
+                      <option value="A">A: Soft</option>
+                      <option value="B">B: Medium</option>
+                      <option value="C">C: Hard</option>
+                    </select>
+                  </td>
                 <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button><td></td>
                 </tr>
                 <!-- Add more rows as needed -->
             </tbody>
@@ -100,7 +123,24 @@
         <p>What if you threw the ball?</p>
         <button onclick="toggleDropdown('answer3')">Show Answer</button>
         <div id="answer3" class="dropdown-content" style="display: none;">
-          <p>Explanation of the effect of throwing the ball.</p>
+          <p>Look, the team left everything out there today. They worked incredibly hard to gather this data, and in the end, that effort really paid off. 
+            What we’ve found is that there’s definitely a relationship between the ball’s pressure and how many times it bounces. On top of that, the surface it hits also plays a huge role in how the ball behaves.
+
+          Think of it like this: when we drop the ball onto a hard surface, it starts with gravitational potential energy – just from being held up. 
+          As soon as you let it go, gravity takes over, and that energy shifts to kinetic energy because the ball is now moving.
+
+          Then, you’ve got the first impact. The ball hits the ground and deforms slightly – that’s where we see some of that kinetic energy converting into elastic potential energy. 
+          The ball compresses, wants to snap back to shape, and that’s when the rebound happens. Not all of the energy makes it into that bounce though – some of it is lost as sound (which we hear), some as heat, and some goes into permanently deforming the ball – which is why, over time, balls wear out.
+
+          Now as the ball comes back up, it's working against gravity again, and eventually it’ll come back down for another bounce. 
+          But it won’t bounce forever – energy losses to heat, sound, and deformation mean each bounce is a little lower.
+
+          When you switch to a softer surface, the story changes. 
+          The ground deforms as well, meaning more energy is absorbed, and the ball doesn’t bounce as much. 
+          Same goes for a ball with lower pressure – it deforms more easily, so again, fewer bounces.
+
+          It’s a great insight for the squad – not just about physics, but about the importance of pressure and conditions. 
+          We’ll definitely be taking this into account moving forward.</p>
         </div>
       </div>
     </section>
@@ -125,22 +165,31 @@
       const element = document.getElementById(id);
       element.style.display = element.style.display === 'none' ? 'block' : 'none';
     }
+    
     // Function to add a new row to the data table
     function addRow() {
       const tableBody = document.querySelector('#data-table tbody');
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
-          <td><input type="number" class="pressure-input" placeholder="Enter pressure"></td>
-          <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-          <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)">Delete</button></td>
+        <td>
+          <select class="pressure-input">
+            <option value="A">A: Soft</option>
+            <option value="B">B: Medium</option>
+            <option value="C">C: Hard</option>
+          </select>
+        </td>
+        <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+        <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
       `;
       tableBody.appendChild(newRow);
-  }
+    }
+    
     // Function to delete a row from the data table
     function deleteRow(btn) {
       const row = btn.closest('tr');
       row.remove();
-  }
+    }
+    
     // Initialize the Chart.js graph
     const ctx = document.getElementById('graphCanvas').getContext('2d');
     const chart = new Chart(ctx, {
@@ -182,38 +231,39 @@
   
     // Function to update the graph based on table input
     function updateGraph() {
-      console.log('updateGraph called'); // Debugging
-  
+      // Define categories and display labels
+      const categories = ["A", "B", "C"];
+      const categoryLabels = {
+        "A": "Soft",
+        "B": "Medium",
+        "C": "Hard"
+      };
+
       const pressureInputs = document.querySelectorAll('.pressure-input');
       const bouncesInputs = document.querySelectorAll('.bounces-input');
-  
-      const pressures = [];
-      const bounces = [];
-  
-      // Collect data from the table
+
+      // Prepare data structure for aggregation
+      const bounceData = { "A": [], "B": [], "C": [] };
+
       pressureInputs.forEach((input, index) => {
-        const pressure = parseFloat(input.value);
+        const pressure = input.value;
         const bounce = parseFloat(bouncesInputs[index].value);
-  
-        if (!isNaN(pressure) && !isNaN(bounce)) {
-          pressures.push(pressure);
-          bounces.push(bounce);
+        if (categories.includes(pressure) && !isNaN(bounce)) {
+          bounceData[pressure].push(bounce);
         }
       });
-  
-      console.log('Pressures:', pressures); // Debugging
-      console.log('Bounces:', bounces); // Debugging
-  
-      // Validate inputs after collecting data
-      if (pressures.length === 0 || bounces.length === 0) {
-        alert('Please enter valid data in the table.');
-        return;
-      }
-  
-      // Update the chart data
-      chart.data.labels = pressures;
+
+      // Calculate average bounces for each category
+      const bounces = categories.map(cat => {
+        const arr = bounceData[cat];
+        if (arr.length === 0) return null; // or 0 if you prefer
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+      });
+
+      // Set labels as "Soft", "Medium", "Hard"
+      chart.data.labels = categories.map(cat => categoryLabels[cat]);
       chart.data.datasets[0].data = bounces;
-      chart.update(); // Refresh the chart
+      chart.update();
     }
   </script>
 </body>
