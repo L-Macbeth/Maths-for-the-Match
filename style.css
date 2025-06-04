@@ -5,7 +5,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    padding-left: 56px; /* Make space for the stripe */
+    padding-left: 40px; /* Make space for the stripe */
 }
   
   header {
@@ -189,16 +189,23 @@ button:hover {
   position: fixed;
   left: 0;
   top: 0;
-  width: 48px;
+  width: 32px;
   height: 100vh;
-  background: linear-gradient(to bottom, #e63946 0%, #e63946 100%);
+  background: #e63946;
   z-index: 1100;
 }
 #football-icon {
   position: absolute;
-  left: 4px;
-  width: 40px;
-  height: 40px;
+  left: 6px;
+  width: 20px;
+  height: 20px;
   transition: top 0.6s cubic-bezier(.4,2,.6,1);
   z-index: 1200;
+}
+#page-start-btn {
+  position: absolute;
+  top: 80px; /* Adjust if your header is taller/shorter */
+  left: 48px;
+  z-index: 1201;
+  margin: 0;
 }
