@@ -221,3 +221,17 @@ button:hover {
 #football-clock svg {
   display: block;
 }
+
+iframe[src*="youtube.com"] {
+  display: block;
+  width: 66vw;         /* 2/3 of viewport width */
+  max-width: 66%;      /* 2/3 of parent width */
+  min-width: 300px;    /* Prevent too small on mobile */
+  aspect-ratio: 16/9;  /* Maintain video aspect ratio */
+  height: auto;
+  margin: 20px auto;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #000;
+}
