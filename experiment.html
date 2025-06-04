@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script> <!-- Link to JavaScript for interactivity -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="timer.js"></script>
 </head>
 <body>
   <header>
@@ -17,147 +16,78 @@
       <a href="contact.html">Contact</a>
     </nav>
   </header>
-
-  <!-- Progress Stripe and Football Icon -->
-  <div id="progress-stripe">
-    <img id="football-icon" src="football-icon.png" alt="Football Icon">
-  </div>
-
-  <!-- Start Button below header, top left -->
-  <button id="page-start-btn">Start Session</button>
-
-  <!-- Football Clock -->
-  <div id="football-clock">
-    <svg width="60" height="60" viewBox="0 0 60 60">
-      <circle cx="30" cy="30" r="28" stroke="#e63946" stroke-width="4" fill="#fff"/>
-      <image href="football-icon.png" x="10" y="10" width="40" height="40"/>
-      <text id="clock-time" x="30" y="38" text-anchor="middle" font-size="18" fill="#333" font-family="Arial">00:00</text>
-    </svg>
-  </div>
-
-  <!-- Timer Panel Section -->
-  <div id="timer-panel">
-    <h3>Session Timer</h3>
-    <div id="timer-step-list"></div>
-    <div id="timer-controls">
-      <button id="timer-prev">Previous</button>
-      <button id="timer-start">Start</button>
-      <button id="timer-pause">Pause</button>
-      <button id="timer-next">Next</button>
-    </div>
-    <div id="timer-current">
-      <h4 id="timer-label"></h4>
-      <p id="timer-desc"></p>
-      <div id="timer-display">00:00</div>
-    </div>
-  </div>
-
   <main>
+    <h1>Experiment</h1>
+
+    <!-- Introduction Section -->
     <section id="introduction">
-      <div class="section-header">
-        <h2>Introduction (5 min)</h2>
-        <div class="section-clock">
-          <svg width="60" height="60" viewBox="0 0 60 60">
-            <circle cx="30" cy="30" r="28" stroke="#e63946" stroke-width="4" fill="#fff"/>
-            <image href="football-icon.png" x="10" y="10" width="40" height="40"/>
-            <text class="clock-time" x="30" y="38" text-anchor="middle" font-size="18" fill="#333" font-family="Arial">00:00</text>
-          </svg>
-        </div>
-      </div>
+      <h2>Introduction</h2>
       <p>This section introduces the experiment and provides context.</p>
       <img src="intro-image.jpg" alt="Introduction Image" />
-    </section>
-
-    <section id="experiment-video">
-      <h2>Experiment Video (2 min)</h2>
-      <!-- Experiment Video -->
+      <h3>Experiment Outline</h3>
       <iframe src="https://www.youtube.com/embed/aFSdq4it8xg" title="Experiment Outline Video" allowfullscreen></iframe>
-    </section>
+      <button onclick="toggleDropdown('script-intro')">Show Script</button>
+      <div id="script-intro" class="dropdown-content" style="display: none;">
+        <p>Hi Team, great to see you here. We have a problem, and I need your help investigating the solution. 
+          The league is introducing a new type of football, and our players have been reporting that the inflation of their football is changing the way that they play. We need to work out what inflation does to the ball, and to help our players find a good amount of inflation for the big game. 
 
-    <section id="experiment-outline">
-      <h2>Experiment Outline (0 min)</h2>
+        In the home changing rooms you should find some balls that have been inflated, can you test which of them have the best bounce? 
+        We also want to know if we can help our players out by playing on the astroturf or on a harder surface, can you investigate if this makes a difference?
+
+        The drill for this experiment is, hold the ball out at chest level, drop it and count the number of bounces. 
+        We’re looking for clean data, so throwing it at the ground is going to make it hard to see if we’re measuring the strength of your arms or the bounciness of the ball.
+        We’re going for 5 reps of this drill on each of the inflated balls. Hold the ball out at chest level, drop it and count the number of bounces.
+
+        The drill is going to require some teamwork. Someone to drop the ball, some team members to count the number of bounces and someone to write down the score. 
+        Your class is going to work together with some of you bouncing the ball onto the changing room floor and some bouncing it on the astroturf.</p>
+      </div>
       <p>Follow the steps below to conduct the experiment.</p>
     </section>
 
-    <!-- Active Experiment - Part 1 -->
-    <section id="active-experiment-1">
-      <h2>Active Experiment - Part 1 (3 min)</h2>
-      <!-- Instructions for part 1 -->
-    </section>
-
-    <!-- Swap Balls -->
-    <section id="swap-balls-1">
-      <h2>Swap Balls (0 min)</h2>
-      <!-- Swap balls instructions or cue -->
-    </section>
-
-    <!-- Active Experiment - Part 2 -->
-    <section id="active-experiment-2">
-      <h2>Active Experiment - Part 2 (3 min)</h2>
-      <!-- Instructions for part 2 -->
-    </section>
-
-    <!-- Return Balls --> 
-    <section id="return-balls">
-      <h2>Return Balls (1 min)</h2>
-      <!-- Return balls instructions -->
-    </section>
-
-    <!-- Graph Plotting (3m) -->
-    <section id="graph-plotting">
-      <h2>Graph Plotting (3 min)</h2>
-      <!-- Graph plotting instructions and graph/table here -->
-      <h3>Data Table</h3>
-      <table id="data-table">
-          <thead>
-              <tr>
-                  <th>Football Inflation</th>
-                  <th>Surface</th>
-                  <th>Number of Bounces</th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                <td>
-                  <select class="pressure-input">
-                    <option value="A">A: Soft</option>
-                    <option value="B">B: Medium</option>
-                    <option value="C">C: Hard</option>
-                  </select>
-                </td>
-                <td>
-                  <select class="surface-input">
-                    <option value="Hard Floor">Hard Floor</option>
-                    <option value="Astroturf">Astroturf</option>
-                    <option value="Grass">Grass</option>
-                    <option value="Carpet">Carpet</option>
-                    <option value="Concrete">Concrete</option>
-                  </select>
-                </td>
+    <!-- Experiment Section -->
+    <section id="experiment">
+      <h2>Experiment</h2>
+      <!-- Data Table -->
+        <h3>Data Table</h3>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Football Inflation</th>
+                    <th>Number of Bounces</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>
+                    <select class="pressure-input">
+                      <option value="A">A: Soft</option>
+                      <option value="B">B: Medium</option>
+                      <option value="C">C: Hard</option>
+                    </select>
+                  </td>
                 <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
                 <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
-              </tr>
-              <!-- Add more rows as needed -->
-          </tbody>
-      </table>
-      <button onclick="addRow()">Add Row</button>
-      <button onclick="updateGraph()">Update Graph</button>
+                </tr>
+                <tr>
+                  <td>
+                    <select class="pressure-input">
+                      <option value="A">A: Soft</option>
+                      <option value="B">B: Medium</option>
+                      <option value="C">C: Hard</option>
+                    </select>
+                  </td>
+                <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        <button onclick="addRow()">Add Row</button>
+        <button onclick="updateGraph()">Update Graph</button>
 
-      <!-- Graph -->
-      <h3>Graph</h3>
-      <canvas id="graphCanvas" width="600" height="400"></canvas>
-    </section>
-
-    <!-- Discussion Questions -->
-    <section id="discussion-questions">
-      <h2>Discussion Questions (4 min)</h2>
-      <!-- Discussion questions here -->
-    </section>
-
-    <section id="show-graph-discussion">
-      <h2>Show Graph & Discussion (5 min)</h2>
-      <!-- Show graph and group discussion here -->
+        <!-- Graph -->
+        <h3>Graph</h3>
+        <canvas id="graphCanvas" width="600" height="400"></canvas>
     </section>
 
     <!-- Theory Outline Section -->
@@ -172,7 +102,7 @@
       <img src="theory-diagram.jpg" alt="Theory Diagram" />
     </section>
 
-    <!-- Discussion Questions -->
+    <!-- Conclusions Questions Section -->
     <section id="conclusions-questions">
       <h2>Questions and Conclusions</h2>
       <div>
@@ -196,8 +126,8 @@
       </div>
       <div>
         <p>Why do you think the surface changes how much the ball bounces? What surface do you think the team should play on?</p>
-        <button onclick="toggleDropdown('answer3')">Show Answer</button>
-        <div id="answer3" class="dropdown-content" style="display: none;">
+        <button onclick="toggleDropdown('answer2')">Show Answer</button>
+        <div id="answer2" class="dropdown-content" style="display: none;">
           <p>The surface changes how much the ball bounces because a softer surface absorbs more energy from the ball when it hits the ground. 
             This means that less energy is available to make the ball bounce back up. 
             The team should play on a harder surface, like the changing room floor, because it will give the ball more bounce and help them score more goals.</p>
@@ -205,18 +135,13 @@
       </div>
       <div>
         <p>What would happen if you threw the ball?</p>
-        <button onclick="toggleDropdown('answer4')">Show Answer</button>
-        <div id="answer4" class="dropdown-content" style="display: none;">
+        <button onclick="toggleDropdown('answer2')">Show Answer</button>
+        <div id="answer2" class="dropdown-content" style="display: none;">
           <p>Throwing the ball would give the ball more energy, we would expect it to bounce higher and for longer. 
             This is why having more energy in a kick is important for a footballer.</p>
         </div>
       </div>
-
-      <!-- Interview video and script -->
-      <div>
-        <iframe src="https://www.youtube.com/embed/YOUR_INTERVIEW_VIDEO_ID" title="Interview Video" allowfullscreen></iframe>
-        <button onclick="toggleDropdown('script-interview')">Show Script</button>
-        <div id="script-interview" class="dropdown-content" style="display: none;">
+        <div id="answer3" class="dropdown-content" style="display: none;">
           <p>Look, the team left everything out there today. They worked incredibly hard to gather this data, and in the end, that effort really paid off. 
             What we’ve found is that there’s definitely a relationship between the ball’s pressure and how many times it bounces. On top of that, the surface it hits also plays a huge role in how the ball behaves.
 
@@ -235,6 +160,7 @@
 
           It’s a great insight for the squad – not just about physics, but about the importance of pressure and conditions. 
           We’ll definitely be taking this into account moving forward.</p>
+        </div>
       </div>
     </section>
 
@@ -271,15 +197,6 @@
             <option value="C">C: Hard</option>
           </select>
         </td>
-        <td>
-          <select class="surface-input">
-            <option value="Hard Floor">Hard Floor</option>
-            <option value="Astroturf">Astroturf</option>
-            <option value="Grass">Grass</option>
-            <option value="Carpet">Carpet</option>
-            <option value="Concrete">Concrete</option>
-          </select>
-        </td>
         <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
         <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
       `;
@@ -295,24 +212,27 @@
     // Initialize the Chart.js graph
     const ctx = document.getElementById('graphCanvas').getContext('2d');
     const chart = new Chart(ctx, {
-      type: 'line',
+      type: 'line', // Line graph
       data: {
-        labels: ["Soft", "Medium", "Hard"], // X-axis: Pressure
-        datasets: [] // Will be filled dynamically
+        labels: [], // X-axis labels (Pressure)
+        datasets: [{
+          label: 'Number of Bounces',
+          data: [], // Y-axis data (Bounces)
+          borderColor: 'blue',
+          borderWidth: 2,
+          fill: false
+        }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top'
-          }
-        },
         scales: {
           x: {
             title: {
               display: true,
-              text: 'Pressure'
+              text: 'Pressure (psi)'
+            },
+            ticks: {
+              beginAtZero: true // Ensure the X-axis starts at zero
             }
           },
           y: {
@@ -320,68 +240,50 @@
               display: true,
               text: 'Number of Bounces'
             },
-            beginAtZero: true
+            ticks: {
+              beginAtZero: true // Ensure the Y-axis starts at zero
+            }
           }
         }
       }
     });
+  
+    // Function to update the graph based on table input
+    function updateGraph() {
+      // Define categories and display labels
+      const categories = ["A", "B", "C"];
+      const categoryLabels = {
+        "A": "Soft",
+        "B": "Medium",
+        "C": "Hard"
+      };
 
-    const sectionIds = [
-  "introduction",
-  "experiment-video",
-  "experiment-outline",
-  "active-experiment-1",
-  "swap-balls-1",
-  "active-experiment-2",
-  "swap-balls-2",
-  "return-balls",
-  "graph-plotting",
-  "discussion-questions",
-  "show-graph-discussion"
-];
+      const pressureInputs = document.querySelectorAll('.pressure-input');
+      const bouncesInputs = document.querySelectorAll('.bounces-input');
 
-// Move football to the section with the given index
-function moveFootballToSection(index) {
-  const icon = document.getElementById('football-icon');
-  const section = document.getElementById(sectionIds[index]);
-  if (icon && section) {
-    const rect = section.getBoundingClientRect();
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    // Place icon at the top of the section, offset for icon height
-    const top = rect.top + scrollTop + 8; // 8px padding from section top
-    icon.style.top = `${top}px`;
-  }
-}
+      // Prepare data structure for aggregation
+      const bounceData = { "A": [], "B": [], "C": [] };
 
-// Example: click to advance the football (for demo/testing)
-let currentSection = 0;
-moveFootballToSection(currentSection);
+      pressureInputs.forEach((input, index) => {
+        const pressure = input.value;
+        const bounce = parseFloat(bouncesInputs[index].value);
+        if (categories.includes(pressure) && !isNaN(bounce)) {
+          bounceData[pressure].push(bounce);
+        }
+      });
 
-document.body.addEventListener('keydown', function(e) {
-  if (e.key === 'ArrowDown') {
-    currentSection = Math.min(currentSection + 1, sectionIds.length - 1);
-    moveFootballToSection(currentSection);
-  }
-  if (e.key === 'ArrowUp') {
-    currentSection = Math.max(currentSection - 1, 0);
-    moveFootballToSection(currentSection);
-  }
-});
+      // Calculate average bounces for each category
+      const bounces = categories.map(cat => {
+        const arr = bounceData[cat];
+        if (arr.length === 0) return null; // or 0 if you prefer
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+      });
 
-// Optionally, add buttons or integrate with your timer to call moveFootballToSection(index)
-
-document.getElementById('timer-start').onclick = function() {
-  // Start or resume timer logic here
-  if (window.timer && typeof window.timer.start === 'function') window.timer.start();
-};
-document.getElementById('timer-next').onclick = function() {
-  // Move to next section logic here
-  if (window.timer && typeof window.timer.next === 'function') window.timer.next();
-};
-document.getElementById('timer-restart').onclick = function() {
-  // Restart timer/session logic here
-  if (window.timer && typeof window.timer.selectStep === 'function') window.timer.selectStep(0);
-};
+      // Set labels as "Soft", "Medium", "Hard"
+      chart.data.labels = categories.map(cat => categoryLabels[cat]);
+      chart.data.datasets[0].data = bounces;
+      chart.update();
+    }
   </script>
 </body>
 </html>
