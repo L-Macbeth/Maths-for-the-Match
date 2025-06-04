@@ -191,49 +191,52 @@
     <p>&copy; 2025 Robins Foundation Outreach</p>
   </footer>
 
-  <script>
-    // JavaScript function to toggle dropdown visibility
-    function toggleDropdown(id) {
-      const element = document.getElementById(id);
-      element.style.display = element.style.display === 'none' ? 'block' : 'none';
+<script>
+  // Make functions globally accessible
+  window.toggleDropdown = function(id) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = (element.style.display === 'none' || element.style.display === '') ? 'block' : 'none';
     }
-    
-    // Function to add a new row to the data table
-    function addRow() {
-      const tableBody = document.querySelector('#data-table tbody');
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td>
-          <select class="pressure-input">
-            <option value="A">A: Soft</option>
-            <option value="B">B: Medium</option>
-            <option value="C">C: Hard</option>
-          </select>
-        </td>
-        <td>
-          <select class="surface-input">
-            <option value="Hard Floor">Hard Floor</option>
-            <option value="Astroturf">Astroturf</option>
-            <option value="Grass">Grass</option>
-            <option value="Carpet">Carpet</option>
-            <option value="Concrete">Concrete</option>
-          </select>
-        </td>
-        <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-        <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
-      `;
-      tableBody.appendChild(newRow);
-    }
-    
-    // Function to delete a row from the data table
-    function deleteRow(btn) {
-      const row = btn.closest('tr');
-      row.remove();
-    }
-    
-    // Initialize the Chart.js graph
-    const ctx = document.getElementById('graphCanvas').getContext('2d');
-    const chart = new Chart(ctx, {
+  };
+
+  window.addRow = function() {
+    const tableBody = document.querySelector('#data-table tbody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>
+        <select class="pressure-input">
+          <option value="A">A: Soft</option>
+          <option value="B">B: Medium</option>
+          <option value="C">C: Hard</option>
+        </select>
+      </td>
+      <td>
+        <select class="surface-input">
+          <option value="Hard Floor">Hard Floor</option>
+          <option value="Astroturf">Astroturf</option>
+          <option value="Grass">Grass</option>
+          <option value="Carpet">Carpet</option>
+          <option value="Concrete">Concrete</option>
+        </select>
+      </td>
+      <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+      <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
+    `;
+    tableBody.appendChild(newRow);
+  };
+
+  window.deleteRow = function(btn) {
+    const row = btn.closest('tr');
+    if (row) row.remove();
+  };
+
+  // Chart.js initialization (only if graphCanvas exists)
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('graphCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    window.chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ["Soft", "Medium", "Hard"], // X-axis: Pressure
@@ -242,4 +245,90 @@
       options: {
         responsive: true,
         plugins: {
-          legend:
+          legend: {
+            display: true
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Pressure'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Bounces'
+            },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    window.updateGraph = function() {
+      const categories = ["A", "B", "C"];
+      const categoryLabels = {
+        "A": "Soft",
+        "B": "Medium",
+        "C": "Hard"
+      };
+      const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
+      const surfaceColors = {
+        "Hard Floor": "blue",
+        "Astroturf": "green",
+        "Grass": "lime",
+        "Carpet": "orange",
+        "Concrete": "gray"
+      };
+
+      const pressureInputs = document.querySelectorAll('.pressure-input');
+      const surfaceInputs = document.querySelectorAll('.surface-input');
+      const bouncesInputs = document.querySelectorAll('.bounces-input');
+
+      // Prepare data structure: surface -> pressure -> [bounces]
+      const bounceData = {};
+      surfaces.forEach(surface => {
+        bounceData[surface] = { "A": [], "B": [], "C": [] };
+      });
+
+      // Track which surfaces are actually used
+      const usedSurfaces = new Set();
+
+      pressureInputs.forEach((input, index) => {
+        const pressure = input.value;
+        const surface = surfaceInputs[index].value;
+        const bounce = parseFloat(bouncesInputs[index].value);
+        if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
+          bounceData[surface][pressure].push(bounce);
+          usedSurfaces.add(surface);
+        }
+      });
+
+      // Build datasets only for used surfaces
+      const datasets = Array.from(usedSurfaces).map(surface => {
+        const data = categories.map(cat => {
+          const arr = bounceData[surface][cat];
+          if (arr.length === 0) return null;
+          return arr.reduce((a, b) => a + b, 0) / arr.length;
+        });
+        return {
+          label: surface,
+          data: data,
+          borderColor: surfaceColors[surface],
+          backgroundColor: surfaceColors[surface],
+          borderWidth: 2,
+          spanGaps: true,
+          fill: false
+        };
+      });
+
+      window.chart.data.labels = categories.map(cat => categoryLabels[cat]);
+      window.chart.data.datasets = datasets;
+      window.chart.update();
+    };
+  });
+</script>
+</body>
+</html>
