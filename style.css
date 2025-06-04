@@ -5,6 +5,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    padding-left: 56px; /* Make space for the stripe */
 }
   
   header {
@@ -102,7 +103,8 @@ button {
 }
   
 button:hover {
-    background-color: #555;
+    background-color: #e63946; /* Bright red */
+    color: #fff;
 }
 
 /* Style for the link preview container */
@@ -129,10 +131,16 @@ button:hover {
 }
 
 .link-preview iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
   display: block;
+  width: 66vw;         /* 2/3 of viewport width */
+  max-width: 66%;      /* 2/3 of parent width */
+  min-width: 300px;    /* Prevent too small on mobile */
+  height: 400px;       /* Or use aspect-ratio if supported */
+  margin: 20px auto;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #000;
 }
 
 .go-to-link-overlay {
@@ -164,4 +172,33 @@ button:hover {
   100% {
     clip-path: inset(0 0 0 0);
   }
+}
+
+.homepage-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.homepage-images img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#progress-stripe {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 100vh;
+  background: linear-gradient(to bottom, #e63946 0%, #e63946 100%);
+  z-index: 1100;
+}
+#football-icon {
+  position: absolute;
+  left: 4px;
+  width: 40px;
+  height: 40px;
+  transition: top 0.6s cubic-bezier(.4,2,.6,1);
+  z-index: 1200;
 }
