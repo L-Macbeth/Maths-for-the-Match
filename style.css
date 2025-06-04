@@ -209,3 +209,15 @@ button:hover {
   z-index: 1201;
   margin: 0;
 }
+#football-clock {
+  position: absolute;
+  top: 140px; /* below the start button */
+  left: 48px;
+  z-index: 1202;
+  width: 60px;
+  height: 60px;
+  user-select: none;
+}
+#football-clock svg {
+  display: block;
+}
