@@ -53,77 +53,102 @@
   </div>
 
   <main>
-    <h1>Experiment</h1>
-
-    <!-- Introduction Section -->
     <section id="introduction">
-      <h2>Introduction</h2>
+      <h2>Introduction (5 min)</h2>
       <p>This section introduces the experiment and provides context.</p>
       <img src="intro-image.jpg" alt="Introduction Image" />
-      <h3>Experiment Outline</h3>
+    </section>
+
+    <section id="experiment-video">
+      <h2>Experiment Video (2 min)</h2>
+      <!-- Experiment Video -->
       <iframe src="https://www.youtube.com/embed/aFSdq4it8xg" title="Experiment Outline Video" allowfullscreen></iframe>
-      <button onclick="toggleDropdown('script-intro')">Show Script</button>
-      <div id="script-intro" class="dropdown-content" style="display: none;">
-        <p>Hi Team, great to see you here. We have a problem, and I need your help investigating the solution. 
-          The league is introducing a new type of football, and our players have been reporting that the inflation of their football is changing the way that they play. We need to work out what inflation does to the ball, and to help our players find a good amount of inflation for the big game. 
+    </section>
 
-        In the home changing rooms you should find some balls that have been inflated, can you test which of them have the best bounce? 
-        We also want to know if we can help our players out by playing on the astroturf or on a harder surface, can you investigate if this makes a difference?
-
-        The drill for this experiment is, hold the ball out at chest level, drop it and count the number of bounces. 
-        We’re looking for clean data, so throwing it at the ground is going to make it hard to see if we’re measuring the strength of your arms or the bounciness of the ball.
-        We’re going for 5 reps of this drill on each of the inflated balls. Hold the ball out at chest level, drop it and count the number of bounces.
-
-        The drill is going to require some teamwork. Someone to drop the ball, some team members to count the number of bounces and someone to write down the score. 
-        Your class is going to work together with some of you bouncing the ball onto the changing room floor and some bouncing it on the astroturf.</p>
-      </div>
+    <section id="experiment-outline">
+      <h2>Experiment Outline (0 min)</h2>
       <p>Follow the steps below to conduct the experiment.</p>
     </section>
 
-    <!-- Experiment Section -->
-    <section id="experiment">
-      <h2>Experiment</h2>
-      <!-- Data Table -->
-        <h3>Data Table</h3>
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th>Football Inflation</th>
-                    <th>Surface</th>
-                    <th>Number of Bounces</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td>
-                    <select class="pressure-input">
-                      <option value="A">A: Soft</option>
-                      <option value="B">B: Medium</option>
-                      <option value="C">C: Hard</option>
-                    </select>
-                  </td>
-                  <td>
-                    <select class="surface-input">
-                      <option value="Hard Floor">Hard Floor</option>
-                      <option value="Astroturf">Astroturf</option>
-                      <option value="Grass">Grass</option>
-                      <option value="Carpet">Carpet</option>
-                      <option value="Concrete">Concrete</option>
-                    </select>
-                  </td>
-                  <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
-                  <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
-                </tr>
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
-        <button onclick="addRow()">Add Row</button>
-        <button onclick="updateGraph()">Update Graph</button>
+    <!-- Active Experiment - Part 1 -->
+    <section id="active-experiment-1">
+      <h2>Active Experiment - Part 1 (3 min)</h2>
+      <!-- Instructions for part 1 -->
+    </section>
 
-        <!-- Graph -->
-        <h3>Graph</h3>
-        <canvas id="graphCanvas" width="600" height="400"></canvas>
+    <!-- Swap Balls -->
+    <section id="swap-balls-1">
+      <h2>Swap Balls (0 min)</h2>
+      <!-- Swap balls instructions or cue -->
+    </section>
+
+    <!-- Active Experiment - Part 2 -->
+    <section id="active-experiment-2">
+      <h2>Active Experiment - Part 2 (3 min)</h2>
+      <!-- Instructions for part 2 -->
+    </section>
+
+    <!-- Return Balls --> 
+    <section id="return-balls">
+      <h2>Return Balls (1 min)</h2>
+      <!-- Return balls instructions -->
+    </section>
+
+    <!-- Graph Plotting (3m) -->
+    <section id="graph-plotting">
+      <h2>Graph Plotting (3 min)</h2>
+      <!-- Graph plotting instructions and graph/table here -->
+      <h3>Data Table</h3>
+      <table id="data-table">
+          <thead>
+              <tr>
+                  <th>Football Inflation</th>
+                  <th>Surface</th>
+                  <th>Number of Bounces</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>
+                  <select class="pressure-input">
+                    <option value="A">A: Soft</option>
+                    <option value="B">B: Medium</option>
+                    <option value="C">C: Hard</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="surface-input">
+                    <option value="Hard Floor">Hard Floor</option>
+                    <option value="Astroturf">Astroturf</option>
+                    <option value="Grass">Grass</option>
+                    <option value="Carpet">Carpet</option>
+                    <option value="Concrete">Concrete</option>
+                  </select>
+                </td>
+                <td><input type="number" class="bounces-input" placeholder="Enter bounces"></td>
+                <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
+              </tr>
+              <!-- Add more rows as needed -->
+          </tbody>
+      </table>
+      <button onclick="addRow()">Add Row</button>
+      <button onclick="updateGraph()">Update Graph</button>
+
+      <!-- Graph -->
+      <h3>Graph</h3>
+      <canvas id="graphCanvas" width="600" height="400"></canvas>
+    </section>
+
+    <!-- Discussion Questions -->
+    <section id="discussion-questions">
+      <h2>Discussion Questions (4 min)</h2>
+      <!-- Discussion questions here -->
+    </section>
+
+    <section id="show-graph-discussion">
+      <h2>Show Graph & Discussion (5 min)</h2>
+      <!-- Show graph and group discussion here -->
     </section>
 
     <!-- Theory Outline Section -->
@@ -138,7 +163,7 @@
       <img src="theory-diagram.jpg" alt="Theory Diagram" />
     </section>
 
-    <!-- Conclusions Questions Section -->
+    <!-- Discussion Questions -->
     <section id="conclusions-questions">
       <h2>Questions and Conclusions</h2>
       <div>
@@ -291,6 +316,50 @@
         }
       }
     });
+
+    const sectionIds = [
+  "introduction",
+  "experiment-video",
+  "experiment-outline",
+  "active-experiment-1",
+  "swap-balls-1",
+  "active-experiment-2",
+  "swap-balls-2",
+  "return-balls",
+  "graph-plotting",
+  "discussion-questions",
+  "show-graph-discussion"
+];
+
+// Move football to the section with the given index
+function moveFootballToSection(index) {
+  const icon = document.getElementById('football-icon');
+  const section = document.getElementById(sectionIds[index]);
+  if (icon && section) {
+    const rect = section.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    // Place icon at the top of the section, offset for icon height
+    const top = rect.top + scrollTop + 8; // 8px padding from section top
+    icon.style.top = `${top}px`;
+  }
+}
+
+// Example: click to advance the football (for demo/testing)
+let currentSection = 0;
+moveFootballToSection(currentSection);
+
+document.body.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown') {
+    currentSection = Math.min(currentSection + 1, sectionIds.length - 1);
+    moveFootballToSection(currentSection);
+  }
+  if (e.key === 'ArrowUp') {
+    currentSection = Math.max(currentSection - 1, 0);
+    moveFootballToSection(currentSection);
+  }
+});
+
+// Optionally, add buttons or integrate with your timer to call moveFootballToSection(index)
   </script>
 </body>
 </html>
