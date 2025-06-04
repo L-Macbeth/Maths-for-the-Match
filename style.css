@@ -1,7 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('images/football-bg.jpg') no-repeat center center fixed;
-    background-size: cover;
     color: #333;
     margin: 0;
     padding: 0;
@@ -234,4 +232,39 @@ iframe[src*="youtube.com"] {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   background: #000;
+}
+
+.experiment-section {
+  background: #fff;
+  width: 66vw;           /* 2/3 of viewport width */
+  max-width: 66vw;
+  min-width: 320px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1.5px 6px rgba(0,0,0,0.06);
+  text-align: left;
+}
+
+/* Only apply background and overlay to experiment page */
+body.experiment-bg {
+    background: url('images/football-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+body.experiment-bg::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.25); /* Optional: dark overlay for readability */
+    z-index: 0;
+    pointer-events: none;
+}
+
+body.experiment-bg main,
+body.experiment-bg header,
+body.experiment-bg footer,
+body.experiment-bg .experiment-section {
+    position: relative;
+    z-index: 1;
 }

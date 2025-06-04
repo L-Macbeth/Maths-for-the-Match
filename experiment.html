@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="timer-steps.js"></script>
 </head>
-<body>
+<body class="experiment-bg">
   <!-- Start Button at the Top -->
   <button id="page-start-btn" style="margin: 30px auto 10px auto; display: block;">Start Session</button>
 
@@ -26,10 +26,7 @@
     </nav>
   </header>
   <main>
-    <h1>Experiment</h1>
-
-    <!-- Introduction Section -->
-    <section id="introduction">
+    <section class="experiment-section" id="introduction">
       <h2>Introduction</h2>
       <p>This section introduces the experiment and provides context.</p>
       <img src="intro-image.jpg" alt="Introduction Image" />
@@ -53,9 +50,8 @@
       <p>Follow the steps below to conduct the experiment.</p>
     </section>
 
-    <!-- Experiment Section -->
-    <section id="experiment">
-      <h2>Experiment</h2>
+    <section class="experiment-section" id="active-experiment">
+      <h2>Active Experiment</h2>
       <!-- Data Table -->
         <h3>Data Table</h3>
         <table id="data-table">
@@ -93,14 +89,17 @@
         </table>
         <button onclick="addRow()">Add Row</button>
         <button onclick="updateGraph()">Update Graph</button>
+    </section>
 
-        <!-- Graph -->
+    <section class="experiment-section" id="graph-plotting">
+      <h2>Graph Plotting</h2>
+      <!-- Graph -->
         <h3>Graph</h3>
         <canvas id="graphCanvas" width="600" height="400"></canvas>
     </section>
 
     <!-- Theory Outline Section -->
-    <section id="theory-outline">
+    <section class="experiment-section" id="theory">
       <h2>Theory Outline</h2>
       <iframe src="https://www.youtube.com/embed/example-theory-video" title="Theory Outline Video" allowfullscreen></iframe>
       <button onclick="toggleDropdown('script-theory')">Show Script</button>
@@ -112,7 +111,7 @@
     </section>
 
     <!-- Conclusions Questions Section -->
-    <section id="conclusions-questions">
+    <section class="experiment-section" id="discussion">
       <h2>Questions and Conclusions</h2>
       <div>
         <p>How does the inflation of the ball effect the number of bounces? Which ball would be best to score a penalty with?</p>
@@ -178,7 +177,7 @@
     </section>
 
     <!-- Conclusions Section -->
-    <section id="conclusions">
+    <section class="experiment-section" id="conclusions">
       <h2>Conclusions</h2>
       <iframe src="https://www.youtube.com/embed/example-conclusion-video" title="Conclusions Video" allowfullscreen></iframe>
       <button onclick="toggleDropdown('script-conclusion')">Show Script</button>
@@ -243,210 +242,4 @@
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            display: true
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Pressure'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Number of Bounces'
-            },
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  
-    // Function to update the graph based on table input
-    function updateGraph() {
-      const categories = ["A", "B", "C"];
-      const categoryLabels = {
-        "A": "Soft",
-        "B": "Medium",
-        "C": "Hard"
-      };
-      const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
-      const surfaceColors = {
-        "Hard Floor": "blue",
-        "Astroturf": "green",
-        "Grass": "lime",
-        "Carpet": "orange",
-        "Concrete": "gray"
-      };
-
-      const pressureInputs = document.querySelectorAll('.pressure-input');
-      const surfaceInputs = document.querySelectorAll('.surface-input');
-      const bouncesInputs = document.querySelectorAll('.bounces-input');
-
-      // Prepare data structure: surface -> pressure -> [bounces]
-      const bounceData = {};
-      surfaces.forEach(surface => {
-        bounceData[surface] = { "A": [], "B": [], "C": [] };
-      });
-
-      pressureInputs.forEach((input, index) => {
-        const pressure = input.value;
-        const surface = surfaceInputs[index].value;
-        const bounce = parseFloat(bouncesInputs[index].value);
-        if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
-          bounceData[surface][pressure].push(bounce);
-        }
-      });
-
-      // Build datasets for each surface
-      const datasets = surfaces.map(surface => {
-        const data = categories.map(cat => {
-          const arr = bounceData[surface][cat];
-          if (arr.length === 0) return null;
-          return arr.reduce((a, b) => a + b, 0) / arr.length;
-        });
-        return {
-          label: surface,
-          data: data,
-          borderColor: surfaceColors[surface],
-          backgroundColor: surfaceColors[surface],
-          borderWidth: 2,
-          spanGaps: true,
-          fill: false
-        };
-      });
-
-      chart.data.labels = categories.map(cat => categoryLabels[cat]);
-      chart.data.datasets = datasets;
-      chart.update();
-    }
-
-    let timerIndex = 0;
-    let timerInterval = null;
-    let timerRemaining = 0;
-
-    function renderTimerSteps() {
-      const list = document.getElementById('timer-step-list');
-      list.innerHTML = '';
-      window.timerSteps.forEach((step, i) => {
-        const btn = document.createElement('button');
-        btn.textContent = `${step.label} (${step.duration ? Math.floor(step.duration/60) + 'm' : '0m'})`;
-        btn.className = (i === timerIndex) ? 'active' : '';
-        btn.onclick = () => selectTimerStep(i);
-        list.appendChild(btn);
-      });
-    }
-
-    function selectTimerStep(i) {
-      timerIndex = i;
-      timerRemaining = window.timerSteps[i].duration;
-      updateTimerDisplay();
-      renderTimerSteps();
-      pauseTimer();
-    }
-
-    function updateTimerDisplay() {
-      const step = window.timerSteps[timerIndex];
-      document.getElementById('timer-label').textContent = step.label;
-      document.getElementById('timer-desc').textContent = step.description;
-      const min = Math.floor(timerRemaining / 60).toString().padStart(2, '0');
-      const sec = (timerRemaining % 60).toString().padStart(2, '0');
-      document.getElementById('timer-display').textContent = `${min}:${sec}`;
-    }
-
-    function startTimer() {
-      if (timerInterval) return;
-      timerInterval = setInterval(() => {
-        if (timerRemaining > 0) {
-          timerRemaining--;
-          updateTimerDisplay();
-        } else {
-          pauseTimer();
-          // Optionally auto-advance to next step
-          // nextTimerStep();
-        }
-      }, 1000);
-    }
-
-    function pauseTimer() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
-
-    function nextTimerStep() {
-      if (timerIndex < window.timerSteps.length - 1) {
-        selectTimerStep(timerIndex + 1);
-      }
-    }
-    function prevTimerStep() {
-      if (timerIndex > 0) {
-        selectTimerStep(timerIndex - 1);
-      }
-    }
-
-    document.getElementById('timer-start').onclick = startTimer;
-    document.getElementById('timer-pause').onclick = pauseTimer;
-    document.getElementById('timer-next').onclick = nextTimerStep;
-    document.getElementById('timer-prev').onclick = prevTimerStep;
-
-    // Initialize
-    selectTimerStep(0);
-    renderTimerSteps();
-
-    // Section anchors for each main activity (add these IDs to your sections as shown below)
-    const sectionIds = [
-      "introduction",
-      "experiment",
-      "theory-outline",
-      "conclusions-questions",
-      "conclusions"
-    ];
-
-    // Move football icon to the current section
-    function moveFootballToSection(index) {
-      const icon = document.getElementById('football-icon');
-      const section = document.getElementById(sectionIds[index]);
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        // Offset so the icon is vertically centered with the section
-        const top = rect.top + scrollTop + rect.height / 2 - 24; // 24 = half icon height
-        icon.style.top = `${top}px`;
-      }
-    }
-
-    // When timer step changes, move the football
-    function updateFootballPositionForTimer() {
-      // Map timerIndex to section index (customize if needed)
-      let sectionIdx = Math.min(timerIndex, sectionIds.length - 1);
-      moveFootballToSection(sectionIdx);
-    }
-
-    // Hook into your timer step selection
-    const originalSelectTimerStep = selectTimerStep;
-    selectTimerStep = function(i) {
-      originalSelectTimerStep(i);
-      updateFootballPositionForTimer();
-    };
-
-    // Start button scrolls to first section and moves football
-    document.getElementById('page-start-btn').onclick = function() {
-      document.getElementById(sectionIds[0]).scrollIntoView({behavior: "smooth"});
-      selectTimerStep(0);
-      updateFootballPositionForTimer();
-    };
-
-    // On page load, position football at the first section
-    window.addEventListener('DOMContentLoaded', () => {
-      updateFootballPositionForTimer();
-    });
-
-    // Also reposition on window resize/scroll
-    window.addEventListener('resize', updateFootballPositionForTimer);
-    window.addEventListener('scroll', updateFootballPositionForTimer);
-  </script>
-</body>
-</html>
+          legend:
