@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>More actions
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,6 +25,7 @@
       <p>This section introduces the experiment and provides context.</p>
       <img src="intro-image.jpg" alt="Introduction Image" />
       <h3>Experiment Outline</h3>
+      <iframe src="https://www.youtube.com/embed/example-video" title="Experiment Outline Video" allowfullscreen></iframe>
       <iframe src="https://www.youtube.com/embed/aFSdq4it8xg" title="Experiment Outline Video" allowfullscreen></iframe>
       <button onclick="toggleDropdown('script-intro')">Show Script</button>
       <div id="script-intro" class="dropdown-content" style="display: none;">
@@ -184,7 +185,7 @@
       const element = document.getElementById(id);
       element.style.display = element.style.display === 'none' ? 'block' : 'none';
     }
-    
+
     // Function to add a new row to the data table
     function addRow() {
       const tableBody = document.querySelector('#data-table tbody');
@@ -202,13 +203,13 @@
       `;
       tableBody.appendChild(newRow);
     }
-    
+
     // Function to delete a row from the data table
     function deleteRow(btn) {
       const row = btn.closest('tr');
       row.remove();
     }
-    
+
     // Initialize the Chart.js graph
     const ctx = document.getElementById('graphCanvas').getContext('2d');
     const chart = new Chart(ctx, {
@@ -247,7 +248,7 @@
         }
       }
     });
-  
+
     // Function to update the graph based on table input
     function updateGraph() {
       // Define categories and display labels
@@ -286,4 +287,3 @@
     }
   </script>
 </body>
-</html>
