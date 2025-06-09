@@ -226,15 +226,12 @@
     window.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["Soft", "Hard"], // X-axis: Pressure
         datasets: [] // Will be filled dynamically
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            display: true
-          }
+          legend: { display: true }
         },
         scales: {
           x: {
@@ -242,22 +239,19 @@
               display: true,
               text: 'Pressure'
             },
+            min: 0,
+            max: 10,
             grid: {
-              color: 'blue',
+              color: 'rgba(100,150,255,0.3)', // pale blue grid lines
               lineWidth: 1,
               drawOnChartArea: true,
-              drawTicks: true,
-              tickColor: 'blue'
+              drawTicks: true
             },
-            // Force grid lines at every integer between 0 and 2 for a square grid
-            min: 0,
-            max: 2,
             ticks: {
               stepSize: 1,
-              callback: function(value, index, values) {
-                // Only label the actual data points (1 and 2)
-                if (value === 1) return 'Soft';
-                if (value === 2) return 'Hard';
+              callback: function(value) {
+                if (value === 2) return 'Soft';
+                if (value === 7) return 'Hard';
                 return '';
               }
             }
@@ -271,14 +265,13 @@
             min: 0,
             max: 14,
             ticks: {
-              stepSize: 1 // grid every 1 unit
+              stepSize: 1
             },
             grid: {
-              color: 'blue',
+              color: 'rgba(100,150,255,0.3)',
               lineWidth: 1,
               drawOnChartArea: true,
-              drawTicks: true,
-              tickColor: 'blue'
+              drawTicks: true
             }
           }
         }
@@ -291,6 +284,7 @@
         "A": "Soft",
         "B": "Hard",
       };
+      const pressureToX = { "A": 2, "B": 7 }; // Map input to x values
       const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
       const surfaceColors = {
         "Hard Floor": "blue",
@@ -304,10 +298,10 @@
       const surfaceInputs = document.querySelectorAll('.surface-input');
       const bouncesInputs = document.querySelectorAll('.bounces-input');
 
-      // Prepare data structure: surface -> pressure -> [bounces]
-      const bounceData = {};
+      // Prepare data structure: surface -> [{x, y}]
+      const surfaceData = {};
       surfaces.forEach(surface => {
-        bounceData[surface] = { "A": [], "B": []};
+        surfaceData[surface] = [];
       });
 
       // Track which surfaces are actually used
@@ -318,17 +312,24 @@
         const surface = surfaceInputs[index].value;
         const bounce = parseFloat(bouncesInputs[index].value);
         if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
-          bounceData[surface][pressure].push(bounce);
+          surfaceData[surface].push({ x: pressureToX[pressure], y: bounce });
           usedSurfaces.add(surface);
         }
       });
 
       // Build datasets only for used surfaces
       const datasets = Array.from(usedSurfaces).map(surface => {
-        const data = categories.map(cat => {
-          const arr = bounceData[surface][cat];
-          if (arr.length === 0) return null;
-          return arr.reduce((a, b) => a + b, 0) / arr.length;
+        // Average y for each x (2 and 7)
+        const pointsByX = { 2: [], 7: [] };
+        surfaceData[surface].forEach(pt => {
+          if (pt.x === 2 || pt.x === 7) pointsByX[pt.x].push(pt.y);
+        });
+        const data = [];
+        [2, 7].forEach(xVal => {
+          if (pointsByX[xVal].length > 0) {
+            const avg = pointsByX[xVal].reduce((a, b) => a + b, 0) / pointsByX[xVal].length;
+            data.push({ x: xVal, y: avg });
+          }
         });
         return {
           label: surface,
@@ -337,11 +338,12 @@
           backgroundColor: surfaceColors[surface],
           borderWidth: 2,
           spanGaps: true,
-          fill: false
+          fill: false,
+          showLine: true,
+          pointRadius: 5
         };
       });
 
-      window.chart.data.labels = categories.map(cat => categoryLabels[cat]);
       window.chart.data.datasets = datasets;
       window.chart.update();
     };
