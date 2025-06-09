@@ -277,3 +277,11 @@ body.experiment-bg .experiment-section {
   border-radius: 10px;
   /* REMOVE any position: absolute or fixed here! */
 }
+
+.wordcloud-img {
+  display: block;
+  margin: 20px auto;
+  max-width: 300px;   /* Adjust size as needed */
+  width: 100%;
+  height: auto;
+}

@@ -107,7 +107,7 @@
     <!-- Conclusions Questions Section -->
     <section class="experiment-section" id="discussion">
       <h2>Questions and Conclusions</h2>
-      <img src="wordcloud.png" alt="Wordcloud" />
+      <img src="wordcloud.png" alt="Wordcloud" class="wordcloud-img" />
       <div>
         <p>Explain how the inflation of the ball effects the number of bounces? Can you predict which ball would be best to score a penalty with? Explain your answer.</p>
         <button onclick="toggleDropdown('answer1')">Show Answer</button>
@@ -246,10 +246,20 @@
               color: 'blue',
               lineWidth: 1,
               drawOnChartArea: true,
-              drawTicks: true
+              drawTicks: true,
+              tickColor: 'blue'
             },
+            // Force grid lines at every integer between 0 and 2 for a square grid
+            min: 0,
+            max: 2,
             ticks: {
-              stepSize: 1 // grid every 1 unit
+              stepSize: 1,
+              callback: function(value, index, values) {
+                // Only label the actual data points (1 and 2)
+                if (value === 1) return 'Soft';
+                if (value === 2) return 'Hard';
+                return '';
+              }
             }
           },
           y: {
@@ -261,13 +271,14 @@
             min: 0,
             max: 14,
             ticks: {
-              stepSize: 2 // y scale in twos
+              stepSize: 1 // grid every 1 unit
             },
             grid: {
-              color: 'black',
+              color: 'blue',
               lineWidth: 1,
               drawOnChartArea: true,
-              drawTicks: true
+              drawTicks: true,
+              tickColor: 'blue'
             }
           }
         }
