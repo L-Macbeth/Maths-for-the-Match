@@ -10,13 +10,6 @@
 </head>
 <body class="experiment-bg">
   <!-- Start Button at the Top -->
-  <button id="page-start-btn" style="margin: 30px auto 10px auto; display: block;">Start Session</button>
-
-  <!-- Progress Stripe and Football Icon -->
-  <div id="progress-stripe">
-    <img id="football-icon" src="football-icon.png" alt="Football Icon">
-  </div>
-
   <header>
     <nav>
       <a href="index.html">Home</a>
@@ -28,7 +21,7 @@
   <main>
     <section class="experiment-section" id="introduction">
       <h2>Introduction</h2>
-      <p>This section introduces the experiment and provides context.</p>
+      <p>Hi Team, we need to work out what inflation does to the ball, and to help our players find a good amount of inflation for the big game.</p>
       <img src="intro-image.jpg" alt="Introduction Image" />
       <h3>Experiment Outline</h3>
       <iframe src="https://www.youtube.com/embed/aFSdq4it8xg" title="Experiment Outline Video" allowfullscreen></iframe>
@@ -52,6 +45,8 @@
 
     <section class="experiment-section" id="active-experiment">
       <h2>Active Experiment</h2>
+      <p>We’re going to do this drill 5 times. Our average will be the most common number of bounces. Circle which ball and surface you are using. Remember to write your scores down.</p>
+      <img src="instruction.png" alt="Instruction Image" />
       <!-- Data Table -->
         <h3>Data Table</h3>
         <table id="data-table">
@@ -68,8 +63,7 @@
                   <td>
                     <select class="pressure-input">
                       <option value="A">A: Soft</option>
-                      <option value="B">B: Medium</option>
-                      <option value="C">C: Hard</option>
+                      <option value="B">B: Hard</option>
                     </select>
                   </td>
                   <td>
@@ -113,8 +107,9 @@
     <!-- Conclusions Questions Section -->
     <section class="experiment-section" id="discussion">
       <h2>Questions and Conclusions</h2>
+      <img src="wordcloud.png" alt="Wordcloud" />
       <div>
-        <p>How does the inflation of the ball effect the number of bounces? Which ball would be best to score a penalty with?</p>
+        <p>Explain how the inflation of the ball effects the number of bounces? Can you predict which ball would be best to score a penalty with? Explain your answer.</p>
         <button onclick="toggleDropdown('answer1')">Show Answer</button>
         <div id="answer1" class="dropdown-content" style="display: none;">
           <p>We found that the less air a ball has inside it, the fewer times it bounces. 
@@ -141,13 +136,6 @@
             The team should play on a harder surface, like the changing room floor, because it will give the ball more bounce and help them score more goals.</p>
         </div>
       </div>
-      <div>
-        <p>What would happen if you threw the ball?</p>
-        <button onclick="toggleDropdown('answer4')">Show Answer</button>
-        <div id="answer4" class="dropdown-content" style="display: none;">
-          <p>Throwing the ball would give the ball more energy, we would expect it to bounce higher and for longer. 
-            This is why having more energy in a kick is important for a footballer.</p>
-        </div>
       </div>
 
       <!-- Interview video and script -->
@@ -207,8 +195,7 @@
       <td>
         <select class="pressure-input">
           <option value="A">A: Soft</option>
-          <option value="B">B: Medium</option>
-          <option value="C">C: Hard</option>
+          <option value="B">B: Hard</option>
         </select>
       </td>
       <td>
@@ -239,7 +226,7 @@
     window.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["Soft", "Medium", "Hard"], // X-axis: Pressure
+        labels: ["Soft", "Hard"], // X-axis: Pressure
         datasets: [] // Will be filled dynamically
       },
       options: {
@@ -254,6 +241,15 @@
             title: {
               display: true,
               text: 'Pressure'
+            },
+            grid: {
+              color: 'blue',
+              lineWidth: 1,
+              drawOnChartArea: true,
+              drawTicks: true
+            },
+            ticks: {
+              stepSize: 1 // grid every 1 unit
             }
           },
           y: {
@@ -261,18 +257,28 @@
               display: true,
               text: 'Number of Bounces'
             },
-            beginAtZero: true
+            beginAtZero: true,
+            min: 0,
+            max: 14,
+            ticks: {
+              stepSize: 2 // y scale in twos
+            },
+            grid: {
+              color: 'black',
+              lineWidth: 1,
+              drawOnChartArea: true,
+              drawTicks: true
+            }
           }
         }
       }
     });
 
     window.updateGraph = function() {
-      const categories = ["A", "B", "C"];
+      const categories = ["A", "B"];
       const categoryLabels = {
         "A": "Soft",
-        "B": "Medium",
-        "C": "Hard"
+        "B": "Hard",
       };
       const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
       const surfaceColors = {
@@ -290,7 +296,7 @@
       // Prepare data structure: surface -> pressure -> [bounces]
       const bounceData = {};
       surfaces.forEach(surface => {
-        bounceData[surface] = { "A": [], "B": [], "C": [] };
+        bounceData[surface] = { "A": [], "B": []};
       });
 
       // Track which surfaces are actually used
