@@ -175,12 +175,16 @@ button:hover {
 .homepage-images {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 20px;
+  margin: 20px 0;
 }
-.homepage-images img {
+
+.homepage-img {
+  width: 300px;
+  height: 200px; /* Adjust as needed for your preferred aspect ratio */
+  object-fit: cover; /* Ensures cropping and fills the box */
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 #progress-stripe {
@@ -248,7 +252,7 @@ iframe[src*="youtube.com"] {
 
 /* Only apply background and overlay to experiment page */
 body.experiment-bg {
-    background: url('bristolcitybackground.jpg') no-repeat center center fixed;
+    background: url('rfBackground.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -284,4 +288,26 @@ body.experiment-bg .experiment-section {
   max-width: 300px;   /* Adjust size as needed */
   width: 100%;
   height: auto;
+}
+
+.instruction-img {
+  display: block;
+  margin: 20px auto;
+  max-width: 66vw; /* 2/3 of the viewport width */
+  width: 100%;
+  height: auto;
+}
+
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 10px;
+}
+
+.footer-logo {
+  height: 48px; /* Set your preferred logo height */
+  width: auto;
+  display: block;
 }
