@@ -307,7 +307,7 @@ body.experiment-bg .experiment-section {
 }
 
 .footer-logo {
-  height: 48px; /* Set your preferred logo height */
+  height: 70px; /* Set your preferred logo height */
   width: auto;
   display: block;
 }
@@ -315,7 +315,7 @@ body.experiment-bg .experiment-section {
 .kick-img {
   display: block;
   margin: 20px auto;
-  max-width: 50vw; /* Half the viewport width */
+  max-width: 25vw; /* Half the viewport width */
   width: 100%;
   height: auto;
 }
