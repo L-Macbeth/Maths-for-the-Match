@@ -23,6 +23,7 @@
       <h2>Introduction</h2>
       <p>Hi Team, we need to work out what inflation does to the ball, and to help our players find a good amount of inflation for the big game.</p>
       <img src="footballKick.jpg" alt="Introduction Image" class="kick-img" />
+      <button id="timer-btn-intro" class="timer-btn" data-timer="600" onclick="startCountdown(this)">10 Minutes</button>
       <h3>Experiment Outline</h3>
       <iframe src="https://www.youtube.com/embed/aFSdq4it8xg" title="Experiment Outline Video" allowfullscreen></iframe>
       <button onclick="toggleDropdown('script-intro')">Show Script</button>
@@ -42,6 +43,8 @@
       <h2>Active Experiment</h2>
       <p>We’re going to do this drill 5 times. Our average will be the most common number of bounces. Circle which ball and surface you are using. Remember to write your scores down.</p>
       <img src="instruction.png" alt="Instruction Image" class="instruction-img" />
+      <p>Spend 5 minutes collecting data on each surface for two balls. Once you have collected the datapoints write down the mean average and move to the next surface.</p>
+      <button id="timer-btn-active" class="timer-btn" data-timer="300" onclick="startCountdown(this)">5 Minutes</button>
       <!-- Data Table -->
         <h3>Data Table</h3>
         <table id="data-table">
@@ -82,13 +85,18 @@
 
     <section class="experiment-section" id="graph-plotting">
       <h2>Graph Plotting</h2>
+      <p>Now that you have collected your data, it’s time to plot it on a graph. Use the data you collected to plot the number of bounces against the inflation of the ball.</p>
+      <button id="timer-btn-graph" class="timer-btn" data-timer="300" onclick="startCountdown(this)">5 Minutes</button>
       <!-- Graph -->
         <h3>Graph</h3>
+        <p>Use the dropdowns to select the inflation of the ball and the surface you used. Then enter the number of bounces you counted.</p>
         <canvas id="graphCanvas" width="600" height="400"></canvas>
     </section>
 
     <!-- Conclusions Questions Section -->
     <section class="experiment-section" id="discussion">
+    <p>Take 5 minutes to discuss the below questions in your groups.</p>
+    <button id="timer-btn-discussion" class="timer-btn" data-timer="300" onclick="startCountdown(this)">5 Minutes</button>
       <h2>Questions</h2>
       <img src="wordcloud.png" alt="Wordcloud" class="wordcloud-img" />
       <div>
@@ -119,7 +127,7 @@
             The team should play on a harder surface, like the changing room floor, because it will give the ball more bounce and help them score more goals.</p>
         </div>
       </div>
-      </div>
+      <button id="timer-btn-discussion" class="timer-btn" data-timer="30" onclick="startCountdown(this)">Start 30s Countdown</button>
     </section>
 
     <!-- Conclusions Section -->
@@ -135,8 +143,9 @@
         <p>As the ball goes back up, gravity slows it down, and then it starts falling again for the next bounce. But the ball doesn’t bounce forever. Each time it loses a bit of energy, so the bounces get lower and lower.</p>
         <p>Now, if we bounce the ball on a soft surface, like astroturf, it doesn’t bounce as much. That’s because both the ball and the ground change shape more, and more energy is lost. This also happens with a ball that isn’t very well inflated – it’s softer and changes shape more easily, so it loses more energy and doesn’t bounce as much.</p>
         <p>We also thought about which ball would be best for scoring a penalty. The answer? The hardest, most inflated ball. That’s because a hard ball doesn’t squash as much when you kick it, so more of your energy goes into moving the ball forward.</p>
-        <p>t’s a great insight for the squad – not just about physics, but about the importance of pressure and conditions. We’ll definitely be taking this into account moving forward.</p>
+        <p>It’s a great insight for the squad – not just about physics, but about the importance of pressure and conditions. We’ll definitely be taking this into account moving forward.</p>
       </div>
+      <button id="timer-btn-conclusion" class="timer-btn" data-timer="12" onclick="startCountdown(this)">Start 12s Countdown</button>
     </section>
 
   </main>
@@ -319,6 +328,27 @@
       window.chart.update();
     };
   });
+
+  // Countdown timer logic
+  window.startCountdown = function(btn) {
+    if (btn._countdownActive) return; // Prevent multiple timers on same button
+    btn._countdownActive = true;
+    const originalText = btn.textContent;
+    let time = parseInt(btn.getAttribute('data-timer'), 10);
+    btn.disabled = true;
+    btn.textContent = `Time left: ${time}s`;
+    const interval = setInterval(() => {
+      time--;
+      if (time > 0) {
+        btn.textContent = `Time left: ${time}s`;
+      } else {
+        clearInterval(interval);
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn._countdownActive = false;
+      }
+    }, 1000);
+  };
 </script>
 </body>
 </html>
