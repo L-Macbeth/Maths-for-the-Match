@@ -329,23 +329,35 @@
     };
   });
 
-  // Countdown timer logic
+  // Countdown timer logic with mm:ss display and reset-on-click
   window.startCountdown = function(btn) {
-    if (btn._countdownActive) return; // Prevent multiple timers on same button
-    btn._countdownActive = true;
-    const originalText = btn.textContent;
+    // If a timer is already running, clear it and reset
+    if (btn._interval) {
+      clearInterval(btn._interval);
+      btn._interval = null;
+    }
+    const originalText = btn.getAttribute('data-original-text') || btn.textContent;
+    btn.setAttribute('data-original-text', originalText);
+
     let time = parseInt(btn.getAttribute('data-timer'), 10);
-    btn.disabled = true;
-    btn.textContent = `Time left: ${time}s`;
-    const interval = setInterval(() => {
+    btn.disabled = false; // Always allow clicking to reset
+
+    function formatTime(secs) {
+      const m = Math.floor(secs / 60).toString().padStart(2, '0');
+      const s = (secs % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    btn.textContent = `Time left: ${formatTime(time)}`;
+
+    btn._interval = setInterval(() => {
       time--;
       if (time > 0) {
-        btn.textContent = `Time left: ${time}s`;
+        btn.textContent = `Time left: ${formatTime(time)}`;
       } else {
-        clearInterval(interval);
+        clearInterval(btn._interval);
+        btn._interval = null;
         btn.textContent = originalText;
-        btn.disabled = false;
-        btn._countdownActive = false;
       }
     }, 1000);
   };
