@@ -36,17 +36,18 @@
         <p>We’re going for 5 reps of this drill on each of the inflated balls. Hold the ball out at chest level, drop it and count the number of bounces.</p>
         <p>The drill is going to require some teamwork. Someone to drop the ball, some team members to count the number of bounces and someone to write down the score. Let’s work together and find out what the best surface, and best inflation is.</p>
       </div>
-      <p>Follow the steps below to conduct the experiment.</p>
     </section>
 
     <section class="experiment-section" id="active-experiment">
       <h2>Active Experiment</h2>
+      <p>Follow the steps below to conduct the experiment on each surface.</p>
       <p>We’re going to do this drill 5 times. Our average will be the most common number of bounces. Circle which ball and surface you are using. Remember to write your scores down.</p>
       <img src="instruction.png" alt="Instruction Image" class="instruction-img" />
-      <p>Spend 5 minutes collecting data on each surface for two balls. Once you have collected the datapoints write down the mean average and move to the next surface.</p>
+      <p>Spend 5 minutes collecting data on each surface for two balls. Once you have collected the datapoints write down the mean average and move to the next surface. The 5 minute timer is for each surface, if you finish a surface early - no worries just restart the timer.</p>
       <button id="timer-btn-active" class="timer-btn" data-timer="300" onclick="startCountdown(this)">5 Minutes</button>
       <!-- Data Table -->
         <h3>Data Table</h3>
+        <p>Use the dropdowns to select the inflation of the ball and the surface you used. Then enter the number of bounces you counted.</p>
         <table id="data-table">
             <thead>
                 <tr>
@@ -80,7 +81,6 @@
             </tbody>
         </table>
         <button onclick="addRow()">Add Row</button>
-        <button onclick="updateGraph()">Update Graph</button>
     </section>
 
     <section class="experiment-section" id="graph-plotting">
@@ -89,7 +89,7 @@
       <button id="timer-btn-graph" class="timer-btn" data-timer="300" onclick="startCountdown(this)">5 Minutes</button>
       <!-- Graph -->
         <h3>Graph</h3>
-        <p>Use the dropdowns to select the inflation of the ball and the surface you used. Then enter the number of bounces you counted.</p>
+        <button onclick="updateGraph()">Update Graph</button>
         <canvas id="graphCanvas" width="600" height="400"></canvas>
     </section>
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact - Maths for the Match</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .contact-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 24px 16px 16px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .contact-headshot {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 16px;
+      border: 3px solid #e63946;
+    }
+    .contact-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .contact-bio {
+      font-size: 1em;
+      margin-bottom: 12px;
+      color: #444;
+    }
+    .linkedin-link {
+      color: #0077b5;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .linkedin-link:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="usefullinks.html">Useful Links</a>
+      <a href="experiment.html">Experiment</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Contact the Team</h1>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <img src="person1.jpg" alt="Person 1" class="contact-headshot">
+        <div class="contact-name">Jo Gildersleve</div>
+        <div class="contact-bio">Project Lead at University of Bristol. Passionate about science outreach and football.</div>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/alexjohnson" target="_blank">
+          <img src="linkedin.svg" alt="LinkedIn" width="20" height="20">LinkedIn
+        </a>
+      </div>
+      <div class="contact-card">
+        <img src="person2.jpg" alt="Person 2" class="contact-headshot">
+        <div class="contact-name">Richard Trask</div>
+        <div class="contact-bio">Professor of Aerospace at the Bristol Composite Institute.</div>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/samirapatel" target="_blank">
+          <img src="linkedin.svg" alt="LinkedIn" width="20" height="20">LinkedIn
+        </a>
+      </div>
+      <div class="contact-card">
+        <img src="person3.jpg" alt="Person 3" class="contact-headshot">
+        <div class="contact-name">Lillian Macbeth</div>
+        <div class="contact-bio">University of Bristol Engineering Alumni, passionate about maths outreach.</div>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/chrislee" target="_blank">
+          <img src="linkedin.svg" alt="LinkedIn" width="20" height="20">LinkedIn
+        </a>
+      </div>
+      <div class="contact-card">
+        <img src="person4.jpg" alt="Person 4" class="contact-headshot">
+        <div class="contact-name">James Thomas</div>
+        <div class="contact-bio">Data Scientist and football enthusiast at the Jean Golding Institute.</div>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/emilychen" target="_blank">
+          <img src="linkedin.svg" alt="LinkedIn" width="20" height="20">LinkedIn
+        </a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-logos">
+      <img src="futuresLogo.png" alt="Bristol Futures Logo" class="footer-logo">
+      <img src="uobLogo.svg" alt="University of Bristol Logo" class="footer-logo">
+      <img src="robinsFoundationLogo.png" alt="Robins Foundation Logo" class="footer-logo">
+      <img src="jgiLogo.svg" alt="Jean Golding Institute Logo" class="footer-logo">
+    </div>
+    <p>2025 University of Bristol for Bristol Futures</p>
+  </footer>
+</body>
+</html>
