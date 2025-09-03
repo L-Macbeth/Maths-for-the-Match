@@ -319,3 +319,108 @@ body.experiment-bg .experiment-section {
   width: 100%;
   height: auto;
 }
+
+/* --- Contact Page Styles --- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.contact-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 24px 16px 16px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-headshot {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  border: 3px solid #e63946;
+}
+.contact-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.contact-bio {
+  font-size: 1em;
+  margin-bottom: 12px;
+  color: #444;
+}
+.linkedin-link {
+  color: #0077b5;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.linkedin-link:hover {
+  text-decoration: underline;
+}
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Feedback Page Styles --- */
+.feedback-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+  align-items: center;
+}
+.feedback-link-section {
+  text-align: center;
+}
+.feedback-link-section a {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #e63946;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 16px;
+}
+.feedback-link-section a:hover {
+  background: #d62839;
+}
+.qr-section {
+  text-align: center;
+}
+.qr-section img {
+  width: 180px;
+  height: 180px;
+  border: 2px solid #e63946;
+  border-radius: 12px;
+  background: #fff;
+  padding: 8px;
+}
+@media (max-width: 700px) {
+  .feedback-container {
+    grid-template-columns: 1fr;
+  }
+  .qr-section img {
+    margin-top: 24px;
+  }
+}

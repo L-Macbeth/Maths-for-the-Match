@@ -16,6 +16,7 @@
       <a href="usefullinks.html">Useful Links</a>
       <a href="experiment.html">Experiment</a>
       <a href="contact.html">Contact</a>
+      <a href="feedback.html">Feedback</a>
     </nav>
   </header>
   <main>
@@ -81,6 +82,7 @@
             </tbody>
         </table>
         <button onclick="addRow()">Add Row</button>
+        <button type="button" onclick="prePopulateData()">Pre-populate Data</button>
     </section>
 
     <section class="experiment-section" id="graph-plotting">
@@ -147,6 +149,30 @@
     </section>
 
   </main>
+  <section class="experiment-section" id="extension-task-section" style="display:none; max-width:700px; margin:40px auto;">
+    <h2>Extension Task</h2>
+    <p>
+      Try designing your own experiment! Can you think of other factors that might affect how a football bounces? 
+      For example, does the temperature of the ball or the height from which it is dropped make a difference? 
+      Plan your experiment, collect data, and share your findings with the group.
+    </p>
+  </section>
+  <div style="text-align:center; margin-bottom:24px;">
+    <button onclick="toggleExtensionTask()" id="show-extension-btn">Show Extension Task</button>
+  </div>
+  <section class="experiment-section" id="feedback-box" style="max-width:700px; margin: 40px auto; text-align:center;">
+    <h2>Share Your Feedback</h2>
+    <div class="feedback-container">
+      <div class="feedback-link-section">
+        <p>Let us know what you thought of the experiment!</p>
+        <a href="https://forms.office.com/e/E9LhHSvpH0" target="_blank">Feedback Form</a>
+      </div>
+      <div class="qr-section">
+        <p>Scan to open our linktree and feedback form on your phone:</p>
+        <img src="feedbackQR.png" alt="Feedback QR Code">
+      </div>
+    </div>
+  </section>
   <footer>
     <div class="footer-logos">
       <img src="futuresLogo.png" alt="Bristol Futures Logo" class="footer-logo">
@@ -193,6 +219,46 @@
   window.deleteRow = function(btn) {
     const row = btn.closest('tr');
     if (row) row.remove();
+  };
+
+  window.prePopulateData = function() {
+    const tableBody = document.querySelector('#data-table tbody');
+    // Clear existing rows
+    tableBody.innerHTML = '';
+    // Data to populate
+    const data = [
+      { inflation: 'A', surface: 'Hard Floor', bounces: 5 },
+      { inflation: 'A', surface: 'Hard Floor', bounces: 6 },
+      { inflation: 'A', surface: 'Astroturf', bounces: 3 },
+      { inflation: 'A', surface: 'Astroturf', bounces: 4 },
+      { inflation: 'B', surface: 'Hard Floor', bounces: 10 },
+      { inflation: 'B', surface: 'Hard Floor', bounces: 11 },
+      { inflation: 'B', surface: 'Astroturf', bounces: 8 },
+      { inflation: 'B', surface: 'Astroturf', bounces: 9 }
+    ];
+    data.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <select class="pressure-input">
+            <option value="A"${row.inflation === 'A' ? ' selected' : ''}>A: Soft</option>
+            <option value="B"${row.inflation === 'B' ? ' selected' : ''}>B: Hard</option>
+          </select>
+        </td>
+        <td>
+          <select class="surface-input">
+            <option value="Hard Floor"${row.surface === 'Hard Floor' ? ' selected' : ''}>Hard Floor</option>
+            <option value="Astroturf"${row.surface === 'Astroturf' ? ' selected' : ''}>Astroturf</option>
+            <option value="Grass"${row.surface === 'Grass' ? ' selected' : ''}>Grass</option>
+            <option value="Carpet"${row.surface === 'Carpet' ? ' selected' : ''}>Carpet</option>
+            <option value="Concrete"${row.surface === 'Concrete' ? ' selected' : ''}>Concrete</option>
+          </select>
+        </td>
+        <td><input type="number" class="bounces-input" value="${row.bounces}" placeholder="Enter bounces"></td>
+        <td><button type="button" class="delete-row-btn" onclick="deleteRow(this)" title="Delete row">&times;</button></td>
+      `;
+      tableBody.appendChild(tr);
+    });
   };
 
   // Chart.js initialization (only if graphCanvas exists)
@@ -358,6 +424,18 @@
         btn.textContent = originalText;
       }
     }, 1000);
+  };
+
+  window.toggleExtensionTask = function() {
+    const section = document.getElementById('extension-task-section');
+    const btn = document.getElementById('show-extension-btn');
+    if (section.style.display === 'none' || section.style.display === '') {
+      section.style.display = 'block';
+      btn.textContent = 'Hide Extension Task';
+    } else {
+      section.style.display = 'none';
+      btn.textContent = 'Show Extension Task';
+    }
   };
 </script>
 </body>
