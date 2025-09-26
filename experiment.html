@@ -9,6 +9,11 @@
   <script src="timer-steps.js"></script>
 </head>
 <body class="experiment-bg">
+  <!-- PDF Worksheet Links at the Top -->
+  <div style="text-align:center; margin-top:16px; margin-bottom:8px;">
+    <a href="Maths for the Match -- Student Worksheet.pdf" target="_blank" style="margin-right:20px; font-weight:bold; color:#1d3557;">Student Worksheet (PDF)</a>
+    <a href="Maths for the Match -- Teacher Worksheet.pdf" target="_blank" style="font-weight:bold; color:#1d3557;">Teacher Worksheet (PDF)</a>
+  </div>
   <!-- Start Button at the Top -->
   <header>
     <nav>
@@ -502,17 +507,7 @@
     }, 1000);
   };
 
-  window.toggleExtensionTask = function() {
-    const section = document.getElementById('extension-task-section');
-    const btn = document.getElementById('show-extension-btn');
-    if (section.style.display === 'none' || section.style.display === '') {
-      section.style.display = 'block';
-      btn.textContent = 'Hide Extension Task';
-    } else {
-      section.style.display = 'none';
-      btn.textContent = 'Show Extension Task';
-    }
-  };
+
 
   // Only one updateBarChart function, updates the existing chart instance
   window.updateBarChart = function() {
