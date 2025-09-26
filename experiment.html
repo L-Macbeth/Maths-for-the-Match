@@ -149,16 +149,19 @@
     </section>
 
   </main>
-  <section class="experiment-section" id="extension-task-section" style="display:none; max-width:700px; margin:40px auto;">
+  <section class="experiment-section" id="extension-task-section" style="max-width:700px; margin:40px auto;">
     <h2>Extension Task</h2>
     <p>We collect data so that we can learn from it. One of the best ways to look at what the data is showing is to plot a graph, just like we did with a line graph earlier.</p>
     <p>Another way to look at the data is to use a bar chart. This can help us to compare the different categories we have been investigating.</p>
-    <button onclick="updateBarChart()">Update Graph</button>
+    <p>Can you sketch a bar chart using the axes below</p>
     <canvas id="barChartCanvas" width="600" height="400"></canvas>
+    <p>See if you were right using the button below. If you have different data, your bar chart might look slightly different. </p>
+    <button onclick="updateBarChart()">Update Graph</button>
   </section>
   <div style="text-align:center; margin-bottom:24px;">
     <button onclick="toggleExtensionTask()" id="show-extension-btn">Show Extension Task</button>
   </div>
+
   <section class="experiment-section" id="feedback-box" style="max-width:700px; margin: 40px auto; text-align:center;">
     <h2>Share Your Feedback</h2>
     <div class="feedback-container">
@@ -173,13 +176,22 @@
     </div>
   </section>
   <footer>
-    <div class="footer-logos">
+  <div class="footer-logos">
+    <a href="https://futuresnight.co.uk" target="_blank">
       <img src="futuresLogo.png" alt="Bristol Futures Logo" class="footer-logo">
-      <img src="uobLogo.svg" alt="University of Bristol Logo" class="footer-logo">
+    </a>
+    <a href="https://www.bristol.ac.uk/composites/" target="_blank">
+      <img src="BCI Logo.jpg" alt="University of Bristol Logo" class="footer-logo">
+    </a>
+    <a href="https://www.bcfc.co.uk/robins-foundation/" target="_blank">
       <img src="robinsFoundationLogo.png" alt="Robins Foundation Logo" class="footer-logo">
-    </div>
-    <p>2025 University of Bristol for Bristol Futures</p>
-  </footer>
+    </a>
+    <a href="https://www.bristol.ac.uk/golding/" target="_blank">
+      <img src="jgiLogo.svg" alt="Jean Golding Institute Logo" class="footer-logo">
+    </a>
+  </div>
+  <p>2025 University of Bristol for Bristol Futures</p>
+</footer>
 
 <script>
   // Make functions globally accessible
@@ -502,108 +514,26 @@
     }
   };
 
+  // Only one updateBarChart function, updates the existing chart instance
   window.updateBarChart = function() {
-    const ctx = document.getElementById('barChartCanvas').getContext('2d');
-    const categories = ["A", "B"];
-    const categoryLabels = {
-      "A": "Soft",
-      "B": "Hard",
-    };
-    const pressureToX = { "A": 2, "B": 7 }; // Map input to x values
-    const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
-    const surfaceColors = {
-      "Hard Floor": "blue",
-      "Astroturf": "green",
-      "Grass": "lime",
-      "Carpet": "orange",
-      "Concrete": "gray"
-    };
-
+    if (!window.barChart) return;
+    // Gather data from table
     const pressureInputs = document.querySelectorAll('.pressure-input');
-    const surfaceInputs = document.querySelectorAll('.surface-input');
     const bouncesInputs = document.querySelectorAll('.bounces-input');
-
-    // Prepare data structure: surface -> [{x, y}]
-    const surfaceData = {};
-    surfaces.forEach(surface => {
-      surfaceData[surface] = [];
-    });
-
-    // Track which surfaces are actually used
-    const usedSurfaces = new Set();
-
-    pressureInputs.forEach((input, index) => {
-      const pressure = input.value;
-      const surface = surfaceInputs[index].value;
-      const bounce = parseFloat(bouncesInputs[index].value);
-      if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
-        surfaceData[surface].push({ x: pressureToX[pressure], y: bounce });
-        usedSurfaces.add(surface);
+    let softBounces = [];
+    let hardBounces = [];
+    pressureInputs.forEach((input, idx) => {
+      const bounce = parseFloat(bouncesInputs[idx].value);
+      if (!isNaN(bounce)) {
+        if (input.value === 'A') softBounces.push(bounce);
+        if (input.value === 'B') hardBounces.push(bounce);
       }
     });
-
-    // Bar chart data
-    const barChartData = {
-      labels: Array.from(usedSurfaces),
-      datasets: [
-        {
-          label: 'Average Bounces',
-          data: surfaces.map(surface => {
-            const points = surfaceData[surface];
-            if (points.length === 0) return 0;
-            const avg = points.reduce((sum, pt) => sum + pt.y, 0) / points.length;
-            return avg;
-          }),
-          backgroundColor: surfaces.map(surface => surfaceColors[surface]),
-          borderColor: 'rgba(255, 255, 255, 0.8)',
-          borderWidth: 2
-        }
-      ]
-    };
-
-    // Destroy previous chart if exists
-    if (window.barChart) {
-      window.barChart.destroy();
-    }
-
-    // Create new bar chart
-    window.barChart = new Chart(ctx, {
-      type: 'bar',
-      data: barChartData,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: true }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Surface'
-            },
-            grid: {
-              color: 'rgba(100,150,255,0.3)', // pale blue grid lines
-              lineWidth: 1,
-              drawOnChartArea: true,
-              drawTicks: true
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Average Number of Bounces'
-            },
-            beginAtZero: true,
-            grid: {
-              color: 'rgba(100,150,255,0.3)',
-              lineWidth: 1,
-              drawOnChartArea: true,
-              drawTicks: true
-            }
-          }
-        }
-      }
-    });
+    // Calculate averages
+    const avgSoft = softBounces.length ? (softBounces.reduce((a,b)=>a+b,0)/softBounces.length) : 0;
+    const avgHard = hardBounces.length ? (hardBounces.reduce((a,b)=>a+b,0)/hardBounces.length) : 0;
+    window.barChart.data.datasets[0].data = [avgSoft, avgHard];
+    window.barChart.update();
   };
 </script>
 </body>
