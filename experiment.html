@@ -269,15 +269,15 @@
     });
   };
 
-  // Chart.js initialization (only if graphCanvas exists)
-  document.addEventListener('DOMContentLoaded', function() {
-    const canvas = document.getElementById('graphCanvas');
-    if (!canvas) return;
+  // Chart.js initialization for both charts
+  // Line chart (graphCanvas)
+  const canvas = document.getElementById('graphCanvas');
+  if (canvas) {
     const ctx = canvas.getContext('2d');
     window.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        datasets: [] // Will be filled dynamically
+        datasets: []
       },
       options: {
         responsive: true,
@@ -286,7 +286,7 @@
         },
         scales: {
           x: {
-            type: 'linear', // <-- Add this line!
+            type: 'linear',
             title: {
               display: true,
               text: 'Pressure'
@@ -294,7 +294,7 @@
             min: 0,
             max: 10,
             grid: {
-              color: 'rgba(100,150,255,0.3)', // pale blue grid lines
+              color: 'rgba(100,150,255,0.3)',
               lineWidth: 1,
               drawOnChartArea: true,
               drawTicks: true
@@ -329,142 +329,128 @@
         }
       }
     });
+  }
 
-    window.updateGraph = function() {
-      const categories = ["A", "B"];
-      const categoryLabels = {
-        "A": "Soft",
-        "B": "Hard",
-      };
-      const pressureToX = { "A": 2, "B": 7 }; // Map input to x values
-      const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
-      const surfaceColors = {
-        "Hard Floor": "blue",
-        "Astroturf": "green",
-        "Grass": "lime",
-        "Carpet": "orange",
-        "Concrete": "gray"
-      };
-
-      const pressureInputs = document.querySelectorAll('.pressure-input');
-      const surfaceInputs = document.querySelectorAll('.surface-input');
-      const bouncesInputs = document.querySelectorAll('.bounces-input');
-
-      // Prepare data structure: surface -> [{x, y}]
-      const surfaceData = {};
-      surfaces.forEach(surface => {
-        surfaceData[surface] = [];
-      });
-
-      // Track which surfaces are actually used
-      const usedSurfaces = new Set();
-
-      pressureInputs.forEach((input, index) => {
-        const pressure = input.value;
-        const surface = surfaceInputs[index].value;
-        const bounce = parseFloat(bouncesInputs[index].value);
-        if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
-          surfaceData[surface].push({ x: pressureToX[pressure], y: bounce });
-          usedSurfaces.add(surface);
-        }
-      });
-
-      // Build datasets only for used surfaces
-      const datasets = Array.from(usedSurfaces).map(surface => {
-        // Average y for each x (2 and 7)
-        const pointsByX = { 2: [], 7: [] };
-        surfaceData[surface].forEach(pt => {
-          if (pt.x === 2 || pt.x === 7) pointsByX[pt.x].push(pt.y);
-        });
-        const data = [];
-        [2, 7].forEach(xVal => {
-          if (pointsByX[xVal].length > 0) {
-            const avg = pointsByX[xVal].reduce((a, b) => a + b, 0) / pointsByX[xVal].length;
-            data.push({ x: xVal, y: avg });
-          }
-        });
-        return {
-          label: surface,
-          data: data,
-          borderColor: surfaceColors[surface],
-          backgroundColor: surfaceColors[surface],
-          borderWidth: 2,
-          spanGaps: true,
-          fill: false,
-          showLine: true,
-          pointRadius: 5
-        };
-      });
-
-      window.chart.data.datasets = datasets;
-      window.chart.update();
-    };
-
-    // Initialize blank bar chart for extension task
-    const barCanvas = document.getElementById('barChartCanvas');
-    if (barCanvas) {
-      const barCtx = barCanvas.getContext('2d');
-      window.barChart = new Chart(barCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Soft Ball', 'Hard Ball'],
-          datasets: [{
-            label: 'Number of Bounces',
-            data: [0, 0], // Blank initially
-            backgroundColor: ['#e63946', '#457b9d']
-          }]
+  // Bar chart (barChartCanvas)
+  const barCanvas = document.getElementById('barChartCanvas');
+  if (barCanvas) {
+    const barCtx = barCanvas.getContext('2d');
+    window.barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Soft Ball', 'Hard Ball'],
+        datasets: [{
+          label: 'Number of Bounces',
+          data: [0, 0],
+          backgroundColor: ['#e63946', '#457b9d']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: true }
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Ball Type'
+            }
           },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Ball Type'
-              }
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Bounces'
             },
-            y: {
-              title: {
-                display: true,
-                text: 'Number of Bounces'
-              },
-              beginAtZero: true,
-              min: 0,
-              max: 14,
-              ticks: {
-                stepSize: 1
-              }
+            beginAtZero: true,
+            min: 0,
+            max: 14,
+            ticks: {
+              stepSize: 1
             }
           }
         }
-      });
-    }
+      }
+    });
+  }
 
-    window.updateBarChart = function() {
-      // Gather data from table
-      const pressureInputs = document.querySelectorAll('.pressure-input');
-      const bouncesInputs = document.querySelectorAll('.bounces-input');
-      let softBounces = [];
-      let hardBounces = [];
-      pressureInputs.forEach((input, idx) => {
-        const bounce = parseFloat(bouncesInputs[idx].value);
-        if (!isNaN(bounce)) {
-          if (input.value === 'A') softBounces.push(bounce);
-          if (input.value === 'B') hardBounces.push(bounce);
+  // Update function for line chart
+  window.updateGraph = function() {
+    const categories = ["A", "B"];
+    const pressureToX = { "A": 2, "B": 7 };
+    const surfaces = ["Hard Floor", "Astroturf", "Grass", "Carpet", "Concrete"];
+    const surfaceColors = {
+      "Hard Floor": "blue",
+      "Astroturf": "green",
+      "Grass": "lime",
+      "Carpet": "orange",
+      "Concrete": "gray"
+    };
+    const pressureInputs = document.querySelectorAll('.pressure-input');
+    const surfaceInputs = document.querySelectorAll('.surface-input');
+    const bouncesInputs = document.querySelectorAll('.bounces-input');
+    const surfaceData = {};
+    surfaces.forEach(surface => { surfaceData[surface] = []; });
+    const usedSurfaces = new Set();
+    pressureInputs.forEach((input, index) => {
+      const pressure = input.value;
+      const surface = surfaceInputs[index].value;
+      const bounce = parseFloat(bouncesInputs[index].value);
+      if (categories.includes(pressure) && surfaces.includes(surface) && !isNaN(bounce)) {
+        surfaceData[surface].push({ x: pressureToX[pressure], y: bounce });
+        usedSurfaces.add(surface);
+      }
+    });
+    const datasets = Array.from(usedSurfaces).map(surface => {
+      const pointsByX = { 2: [], 7: [] };
+      surfaceData[surface].forEach(pt => {
+        if (pt.x === 2 || pt.x === 7) pointsByX[pt.x].push(pt.y);
+      });
+      const data = [];
+      [2, 7].forEach(xVal => {
+        if (pointsByX[xVal].length > 0) {
+          const avg = pointsByX[xVal].reduce((a, b) => a + b, 0) / pointsByX[xVal].length;
+          data.push({ x: xVal, y: avg });
         }
       });
-      // Calculate averages (or sum, as preferred)
-      const avgSoft = softBounces.length ? (softBounces.reduce((a,b)=>a+b,0)/softBounces.length) : 0;
-      const avgHard = hardBounces.length ? (hardBounces.reduce((a,b)=>a+b,0)/hardBounces.length) : 0;
-      if (window.barChart) {
-        window.barChart.data.datasets[0].data = [avgSoft, avgHard];
-        window.barChart.update();
+      return {
+        label: surface,
+        data: data,
+        borderColor: surfaceColors[surface],
+        backgroundColor: surfaceColors[surface],
+        borderWidth: 2,
+        spanGaps: true,
+        fill: false,
+        showLine: true,
+        pointRadius: 5
+      };
+    });
+    if (window.chart) {
+      window.chart.data.datasets = datasets;
+      window.chart.update();
+    }
+  };
+
+  // Update function for bar chart
+  window.updateBarChart = function() {
+    const pressureInputs = document.querySelectorAll('.pressure-input');
+    const bouncesInputs = document.querySelectorAll('.bounces-input');
+    let softBounces = [];
+    let hardBounces = [];
+    pressureInputs.forEach((input, idx) => {
+      const bounce = parseFloat(bouncesInputs[idx].value);
+      if (!isNaN(bounce)) {
+        if (input.value === 'A') softBounces.push(bounce);
+        if (input.value === 'B') hardBounces.push(bounce);
       }
-    };
-  });
+    });
+    const avgSoft = softBounces.length ? (softBounces.reduce((a,b)=>a+b,0)/softBounces.length) : 0;
+    const avgHard = hardBounces.length ? (hardBounces.reduce((a,b)=>a+b,0)/hardBounces.length) : 0;
+    if (window.barChart) {
+      window.barChart.data.datasets[0].data = [avgSoft, avgHard];
+      window.barChart.update();
+    }
+  };
 
   // Countdown timer logic with mm:ss display and reset-on-click
   window.startCountdown = function(btn) {
